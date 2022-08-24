@@ -86,8 +86,8 @@ async function handlePostback(sender_psid, received_postback) {
     let payload = received_postback.payload
 
     // Set the response based on the postback payload
-    if (payload === 'GET_STARTED') {
-        response = templates.welcomeTemplate()
+    if (payload === 'GET_STARTED' || payload === 'RESTART') {
+        response = await generateWelcomeTemplate(sender_psid)
     } else if (payload === 'REQUEST_EVENT') {
         response = templates.eventTemplate()
     } else if (payload === 'REQUEST_MATERIAL') {
@@ -98,6 +98,26 @@ async function handlePostback(sender_psid, received_postback) {
 
     callSendAPI(sender_psid, response)
     // Send the message to acknowledge the postback
+}
+
+async function generateWelcomeTemplate(sender_psid) {
+    let user = await getUserInfo(sender_psid)
+    return templates.welcomeTemplate(user)
+}
+
+async function getUserInfo(sender_psid) {
+    let result
+
+    try {
+        result = await axios({
+            method: 'GET',
+            url: `https://graph.facebook.com/${sender_psid}?&access_token=${process.env.PAGE_ACCESS_TOKEN}`,
+        })
+    } catch (e) {
+        console.log(e)
+    }
+
+    return result.data
 }
 
 async function generateMemeTemplate() {
@@ -144,7 +164,7 @@ async function uploadImage(url) {
     } catch (e) {
         console.log(e)
     }
-    
+
     return result.data.attachment_id
 }
 

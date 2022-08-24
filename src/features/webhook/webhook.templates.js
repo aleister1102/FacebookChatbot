@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-function welcomeTemplate() {
+function welcomeTemplate(user) {
     return {
         attachment: {
             type: 'template',
@@ -8,9 +8,8 @@ function welcomeTemplate() {
                 template_type: 'generic',
                 elements: [
                     {
-                        title: 'Bạn cần gì ở chúng tôi?',
-                        subtitle:
-                            'Bấm vào một trong những nút bên dưới để trả lời',
+                        title: `Xin chào ${user.first_name} ${user.last_name}`,
+                        subtitle: 'Bạn cần gì ở chúng tôi?',
                         image_url:
                             'https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
                         buttons: [

@@ -1,5 +1,9 @@
 const axios = require('axios')
 
+const FANPAGE_URL =
+    'https://www.facebook.com/Aleisters-botchat-103450915827944/'
+const MATERIAL_URL = 'https://www.wikipedia.org/'
+
 function setupProfile(req, res) {
     // Construct the message body
     let request_body = {
@@ -13,7 +17,9 @@ function setupProfile(req, res) {
                 text: 'Timeless apparel for the masses.',
             },
         ],
-        get_started: { payload: 'GET_STARTED' },
+        get_started: {
+            payload: 'GET_STARTED',
+        },
         whitelisted_domains: [
             'https://1d41-2405-4803-c83e-86c0-9852-296d-6ebb-f885.ngrok.io/',
         ],
@@ -23,20 +29,19 @@ function setupProfile(req, res) {
                 composer_input_disabled: false,
                 call_to_actions: [
                     {
-                        type: 'postback',
-                        title: 'Talk to an agent',
-                        payload: 'CARE_HELP',
-                    },
-                    {
-                        type: 'postback',
-                        title: 'Outfit suggestions',
-                        payload: 'CURATION',
+                        type: 'web_url',
+                        title: 'Truy cập fanpage',
+                        url: FANPAGE_URL,
                     },
                     {
                         type: 'web_url',
-                        title: 'Shop now',
-                        url: 'https://www.originalcoastclothing.com/',
-                        webview_height_ratio: 'full',
+                        title: 'Tài liệu tổng hợp',
+                        url: MATERIAL_URL,
+                    },
+                    {
+                        type: 'postback',
+                        title: 'Khởi động lại cuộc hội thoại',
+                        payload: 'RESTART',
                     },
                 ],
             },
