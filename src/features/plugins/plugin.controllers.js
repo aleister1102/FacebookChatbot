@@ -22,4 +22,6 @@ function setupProfile(req, res) {
         .catch((error) => console.log('Unable to setup: ' + error))
 }
 
-module.exports = { setupProfile: setupProfile }
+module.exports = {
+    setupProfile: setupProfile,
+}
