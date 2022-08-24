@@ -1,4 +1,5 @@
 const request = require('request')
+const axios = require('axios')
 
 function askTemplate(attachment_url) {
     return {
@@ -79,21 +80,13 @@ function callSendAPI(sender_psid, response) {
     }
 
     // Send the HTTP request to the Messenger Platform
-    request(
-        {
-            uri: 'https://graph.facebook.com/v2.6/me/messages',
-            qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
-            method: 'POST',
-            json: request_body,
-        },
-        (err, res, body) => {
-            if (!err) {
-                console.log('message sent!')
-            } else {
-                console.error('Unable to send message:' + err)
-            }
-        },
-    )
+    axios({
+        method: 'POST',
+        url: `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`,
+        data: request_body,
+    })
+        .then(() => console.log('message sent!'))
+        .catch((error) => console.log('Unable to send message:' + error))
 }
 
 module.exports = {
