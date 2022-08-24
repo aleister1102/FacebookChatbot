@@ -1,3 +1,6 @@
+const axios = require('axios')
+const { memeTemplate } = require('./webhook.templates')
+
 function getWebhook(req, res) {
     // Parse the query params
     let mode = req.query['hub.mode']
@@ -50,9 +53,6 @@ function postWebhook(req, res) {
     }
 }
 
-const axios = require('axios')
-const templates = require('./webhook.templates')
-
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
     let response
@@ -62,35 +62,90 @@ function handleMessage(sender_psid, received_message) {
         // Create the payload for a basic text message, which
         // will be added to the body of our request to the Send API
         response = {
-            text: `You sent the message: "${received_message.text}". Now send me an attachment!`,
+            text: `You sent the message: "${received_message.text}"`,
         }
-    } else if (received_message.attachments) {
+    }
+    // TODO: handle attachments
+    else if (received_message.attachments) {
         // Get the URL of the message attachment
-        let attachment_url = received_message.attachments[0].payload.url
-        response = templates.askTemplate(attachment_url)
+        // let attachment_url = received_message.attachments[0].payload.url
+        // response = templates.askTemplate(attachment_url)
     }
 
     // Send the response message
     callSendAPI(sender_psid, response)
 }
 
+const templates = require('./webhook.templates')
+
 // Handles messaging_postbacks events
-function handlePostback(sender_psid, received_postback) {
+async function handlePostback(sender_psid, received_postback) {
     let response
 
     // Get the payload for the postback
     let payload = received_postback.payload
 
     // Set the response based on the postback payload
-    if (payload === 'yes') {
-        response = { text: 'Thanks!' }
-    } else if (payload === 'no') {
-        response = { text: 'Oops, try sending another image.' }
-    } else if (payload === 'GET_STARTED') {
-        response = { text: `Welcome to the fanpage!` }
+    if (payload === 'GET_STARTED') {
+        response = templates.welcomeTemplate()
+    } else if (payload === 'REQUEST_EVENT') {
+        response = templates.eventTemplate()
+    } else if (payload === 'REQUEST_MATERIAL') {
+        response = templates.materialTemplate()
+    } else if (payload === 'REQUEST_MEME' || payload === 'REQUEST_OTHER_MEME') {
+        response = await generateMemeTemplate()
     }
-    // Send the message to acknowledge the postback
+
     callSendAPI(sender_psid, response)
+    // Send the message to acknowledge the postback
+}
+
+async function generateMemeTemplate() {
+    let meme_url = await getMeme()
+    let attachment_id = await uploadImage(meme_url)
+    return templates.memeTemplate(attachment_id)
+}
+
+async function getMeme() {
+    let result
+
+    try {
+        result = await axios({
+            method: 'GET',
+            url: 'https://meme-api.herokuapp.com/gimme',
+        })
+    } catch (e) {
+        console.log(e)
+    }
+
+    return result.data.preview.pop()
+}
+
+async function uploadImage(url) {
+    let result
+
+    let request_body = {
+        message: {
+            attachment: {
+                type: 'image',
+                payload: {
+                    is_reusable: true,
+                    url,
+                },
+            },
+        },
+    }
+    try {
+        result = await axios({
+            method: 'POST',
+            url: `https://graph.facebook.com/v14.0/me/message_attachments?access_token=${process.env.PAGE_ACCESS_TOKEN}`,
+            data: request_body,
+        })
+    } catch (e) {
+        console.log(e)
+    }
+    
+    return result.data.attachment_id
 }
 
 // Sends response messages via the Send API
