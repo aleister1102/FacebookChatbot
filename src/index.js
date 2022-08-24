@@ -1,8 +1,8 @@
 const express = require('express')
 const app = express()
 
-const configMiddlewares = require('./config/index.config')
-const initRoutes = require('./routes/index.routes')
+const { configMiddlewares, configViewEngine } = require('./config/index.config')
+const { configRoutes } = require('./routes/')
 
 const port = process.env.PORT || 3000
 
@@ -11,4 +11,5 @@ app.listen(port, () => {
 })
 
 configMiddlewares(app)
-initRoutes(app)
+configViewEngine(app)
+configRoutes(app)

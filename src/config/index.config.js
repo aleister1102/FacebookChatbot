@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
+const path = require('path')
 
 function configMiddlewares(app) {
     // HTTP logger
@@ -13,4 +14,9 @@ function configMiddlewares(app) {
     app.use(express.urlencoded({ extended: false }))
 }
 
-module.exports = configMiddlewares
+function configViewEngine(app) {
+    app.set('view engine', 'ejs')
+    app.set('views', path.join(__dirname, '../', 'views'))
+}
+
+module.exports = { configMiddlewares, configViewEngine }

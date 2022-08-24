@@ -1,3 +1,7 @@
 curl -X GET "localhost:3000/webhook?hub.verify_token=ALEISTER_CHATBOT&hub.challenge=CHALLENGE_ACCEPTED&hub.mode=subscribe"
 
 curl -H "Content-Type: application/json" -X POST "localhost:3000/webhook" -d '{"object": "page", "entry": [{"messaging": [{"message": "TEST_MESSAGE"}]}]}'
+
+curl -H "Content-Type: application/json" -X POST "https://graph.facebook.com/v14.0/me/messenger_profile?access_token=EABWAbarpSekBAArDWFyJQdvEm4AxU25dZAMBcJBRtnYxw6FKPbXIFVt7cd1tNh8gD3WyA84BvVLFnATJCRkeqQoynZADwnai91hY4vnCeF0ulWS54nZCjyuE84pSJSmGCgXO4GQwScwah7tFUOcBvnTzmUlMS1oVxz7fR2gbljzKyCEF4rX1roZBEXyFInJVZBLXgFraxKgZDZD" -d '{
+  "get_started": "GET_STARTED"
+}' 
