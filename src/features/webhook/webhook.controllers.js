@@ -90,21 +90,24 @@ async function handlePostback(sender_psid, received_postback) {
         payload === 'RESTART' ||
         payload === 'MAIN_MENU'
     ) {
-        response = await generateWelcomeTemplate(sender_psid)
+        response = await handleGetStarted(sender_psid)
     } else if (payload === 'EVENT') {
         response = templates.eventTemplate()
     } else if (payload === 'MATERIAL') {
         response = templates.materialTemplate()
     } else if (payload === 'MEME') {
-        response = await generateMemeTemplate()
+        response = await handleMemeRequest(sender_psid)
     }
 
     callSendAPI(sender_psid, response)
     // Send the message to acknowledge the postback
 }
 
-async function generateWelcomeTemplate(sender_psid) {
+async function handleGetStarted(sender_psid) {
     let user = await getUserInfo(sender_psid)
+
+    sendGreeting(sender_psid, user)
+
     return templates.welcomeTemplate(user)
 }
 
@@ -123,10 +126,19 @@ async function getUserInfo(sender_psid) {
     return result.data
 }
 
-async function generateMemeTemplate() {
+function sendGreeting(sender_psid, user) {
+    let greeting = {
+        text: `Chào mừng ${user.first_name} ${user.last_name} đến với Aleister's chatbot!`,
+    }
+    callSendAPI(sender_psid, greeting)
+}
+
+async function handleMemeRequest(sender_psid) {
     let meme_url = await getMeme()
-    let attachment_id = await uploadImage(meme_url)
-    return templates.memeTemplate(attachment_id)
+
+    sendMeme(sender_psid, meme_url)
+
+    return templates.memeButtonsTemplate(attachment_id)
 }
 
 async function getMeme() {
@@ -143,6 +155,11 @@ async function getMeme() {
     }
 
     return result.data.preview.pop()
+}
+
+function sendMeme(sender_psid, meme_url) {
+    let meme = templates.memeTemplate(meme_url)
+    callSendAPI(sender_psid, meme)
 }
 
 async function uploadImage(url) {
@@ -220,7 +237,7 @@ function callSendAPI(sender_psid, response) {
 
     // Before sending the message, set up typing on effect for upcoming messages and mark seen for received messages
     setupTypingOn(sender_psid)
-    setupMarkSeen(sender_psid)
+    // setupMarkSeen(sender_psid)
 
     // Send the HTTP request to the Messenger Platform
     axios({

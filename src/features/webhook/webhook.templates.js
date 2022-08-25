@@ -8,8 +8,9 @@ function welcomeTemplate(user) {
                 template_type: 'generic',
                 elements: [
                     {
-                        title: `Xin chào ${user.first_name} ${user.last_name}`,
-                        subtitle: 'Bạn cần gì ở chúng tôi?',
+                        title: `Bạn cần gì ở chúng tôi?`,
+                        subtitle:
+                            'Bấm vào một trong các nút bên dưới để trả lời',
                         image_url:
                             'https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
                         buttons: [
@@ -155,16 +156,27 @@ function materialTemplate() {
     }
 }
 
-function memeTemplate(attachment_id) {
+function memeTemplate(meme_url) {
+    return {
+        attachment: {
+            type: 'image',
+            payload: {
+                url: meme_url,
+                is_reusable: true,
+            },
+        },
+    }
+}
+
+function memeButtonsTemplate(attachment_id) {
     return {
         attachment: {
             type: 'template',
             payload: {
-                template_type: 'media',
+                template_type: 'generic',
                 elements: [
                     {
-                        media_type: 'image',
-                        attachment_id,
+                        title: 'Hi vọng chiếc meme ở trên sẽ giúp bạn vui vẻ hơn 😊',
                         buttons: [
                             {
                                 type: 'postback',
@@ -188,5 +200,6 @@ module.exports = {
     welcomeTemplate: welcomeTemplate,
     eventTemplate: eventTemplate,
     materialTemplate: materialTemplate,
+    memeButtonsTemplate: memeButtonsTemplate,
     memeTemplate: memeTemplate,
 }
