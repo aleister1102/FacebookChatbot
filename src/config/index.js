@@ -1,4 +1,5 @@
 require('dotenv').config()
+const { engine } = require('express-handlebars')
 const express = require('express')
 const morgan = require('morgan')
 const path = require('path')
@@ -15,8 +16,14 @@ function configMiddlewares(app) {
 }
 
 function configViewEngine(app) {
-    app.set('view engine', 'ejs')
-    app.set('views', path.join(__dirname, '../', 'views'))
+    app.engine(
+        'hbs',
+        engine({
+            extname: 'hbs',
+        }),
+    )
+    app.set('view engine', 'hbs')
+    app.set('views', path.join(__dirname, '..', 'views'))
 }
 
 module.exports = { configMiddlewares, configViewEngine }
