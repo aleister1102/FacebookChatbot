@@ -156,10 +156,10 @@ function handleMaterialRequest(sender_psid) {
     callSendAPI(sender_psid, materialMenu)
 }
 
-async function handleMemeRequest(sender_psid) {
+function handleMemeRequest(sender_psid) {
     let meme_url = await getMeme()
 
-    await sendMeme(sender_psid, meme_url)
+    sendMeme(sender_psid, meme_url)
     sendMemeButtons(sender_psid)
 }
 
@@ -179,10 +179,9 @@ async function getMeme() {
     return result.data.preview.pop()
 }
 
-async function sendMeme(sender_psid, meme_url) {
+function sendMeme(sender_psid, meme_url) {
     let meme = templates.memeTemplate(meme_url)
     callSendAPI(sender_psid, meme)
-    return
 }
 
 function sendMemeButtons(sender_psid) {
