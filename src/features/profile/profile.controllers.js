@@ -3,6 +3,7 @@ const axios = require('axios')
 const FANPAGE_URL =
     'https://www.facebook.com/Aleisters-botchat-103450915827944/'
 const MATERIAL_URL = 'https://www.wikipedia.org/'
+const APP_DOMAIN = 'https://aleister-botchat.herokuapp.com/'
 
 function setupProfile(req, res) {
     // Construct the message body
@@ -20,7 +21,7 @@ function setupProfile(req, res) {
         get_started: {
             payload: 'GET_STARTED',
         },
-        whitelisted_domains: [process.env.APP_DOMAIN],
+        whitelisted_domains: [APP_DOMAIN],
         persistent_menu: [
             {
                 locale: 'default',
