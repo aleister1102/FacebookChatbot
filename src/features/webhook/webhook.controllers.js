@@ -157,26 +157,18 @@ function handleMaterialRequest(sender_psid) {
 }
 
 async function handleMemeRequest(sender_psid) {
-    let meme_url = await getMeme()
-
-    sendMeme(sender_psid, meme_url)
-    sendMemeButtons(sender_psid)
-}
-
-async function getMeme() {
-    let result
-
     try {
-        result = await axios({
+        let result = await axios({
             method: 'GET',
             url: 'https://meme-api.herokuapp.com/gimme',
         })
         console.log('Get meme', ' - Succeed!')
+
+        sendMeme(sender_psid, result.data.preview.pop())
+        sendMemeButtons(sender_psid)
     } catch (e) {
         console.log(e)
     }
-
-    return result.data.preview.pop()
 }
 
 function sendMeme(sender_psid, meme_url) {
