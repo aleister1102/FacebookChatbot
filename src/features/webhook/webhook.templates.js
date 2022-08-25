@@ -147,7 +147,7 @@ function memeTemplate(attachment_id) {
                             {
                                 type: 'postback',
                                 title: 'Xem meme khác',
-                                payload: 'REQUEST_OTHER_MEME',
+                                payload: 'REQUEST_MEME',
                             },
                         ],
                     },

@@ -20,9 +20,7 @@ function setupProfile(req, res) {
         get_started: {
             payload: 'GET_STARTED',
         },
-        whitelisted_domains: [
-            'https://1d41-2405-4803-c83e-86c0-9852-296d-6ebb-f885.ngrok.io/',
-        ],
+        whitelisted_domains: [process.env.DOMAIN],
         persistent_menu: [
             {
                 locale: 'default',

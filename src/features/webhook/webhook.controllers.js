@@ -12,7 +12,7 @@ function getWebhook(req, res) {
         // Check the mode and token sent is correct
         if (mode === 'subscribe' && token === process.env.VERIFY_TOKEN) {
             // Respond with the challenge token from the request
-            console.log('WEBHOOK_VERIFIED')
+            console.log('WEBHOOK_VERIFIED') 
             res.status(200).send(challenge)
         } else {
             // Respond with '403 Forbidden' if verify tokens do not match
@@ -92,7 +92,7 @@ async function handlePostback(sender_psid, received_postback) {
         response = templates.eventTemplate()
     } else if (payload === 'REQUEST_MATERIAL') {
         response = templates.materialTemplate()
-    } else if (payload === 'REQUEST_MEME' || payload === 'REQUEST_OTHER_MEME') {
+    } else if (payload === 'REQUEST_MEME') {
         response = await generateMemeTemplate()
     }
 
