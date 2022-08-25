@@ -84,11 +84,6 @@ async function handlePostback(sender_psid, received_postback) {
     // Get the payload for the postback
     let payload = received_postback.payload
 
-    // Setup sender actions
-    if (payload === 'GET_STARTED') {
-        setupSenderActions(sender_psid)
-    }
-
     // Set the response based on the postback payload
     if (
         payload === 'GET_STARTED' ||
@@ -106,40 +101,6 @@ async function handlePostback(sender_psid, received_postback) {
 
     callSendAPI(sender_psid, response)
     // Send the message to acknowledge the postback
-}
-
-function setupTypingOn(sender_psid) {
-    let request_body = {
-        recipient: {
-            id: sender_psid,
-        },
-        sender_action: 'typing_on',
-    }
-
-    axios({
-        method: 'POST',
-        url: `https://graph.facebook.com/v14.0/${process.env.PAGE_ID}/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`,
-        data: request_body,
-    })
-        .then(() => console.log('Set up typing on', ' - Succeed!'))
-        .catch((error) => console.log('Set up typing on', '- Failed: ' + error))
-}
-
-function setupMarkRead(sender_psid) {
-    let request_body = {
-        recipient: {
-            id: sender_psid,
-        },
-        sender_action: 'mark_seen',
-    }
-
-    axios({
-        method: 'POST',
-        url: `https://graph.facebook.com/v14.0/${process.env.PAGE_ID}/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`,
-        data: request_body,
-    })
-        .then(() => console.log('Set up mark seen', ' - Succeed!'))
-        .catch((error) => console.log('Set up mark seen', '- Failed: ' + error))
 }
 
 async function generateWelcomeTemplate(sender_psid) {
@@ -213,6 +174,40 @@ async function uploadImage(url) {
     return result.data.attachment_id
 }
 
+function setupTypingOn(sender_psid) {
+    let request_body = {
+        recipient: {
+            id: sender_psid,
+        },
+        sender_action: 'typing_on',
+    }
+
+    axios({
+        method: 'POST',
+        url: `https://graph.facebook.com/v14.0/${process.env.PAGE_ID}/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`,
+        data: request_body,
+    })
+        .then(() => console.log('Set up typing on', ' - Succeed!'))
+        .catch((error) => console.log('Set up typing on', '- Failed: ' + error))
+}
+
+function setupMarkSeen(sender_psid) {
+    let request_body = {
+        recipient: {
+            id: sender_psid,
+        },
+        sender_action: 'mark_seen',
+    }
+
+    axios({
+        method: 'POST',
+        url: `https://graph.facebook.com/v14.0/${process.env.PAGE_ID}/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`,
+        data: request_body,
+    })
+        .then(() => console.log('Set up mark seen', ' - Succeed!'))
+        .catch((error) => console.log('Set up mark seen', '- Failed: ' + error))
+}
+
 // Sends response messages via the Send API
 function callSendAPI(sender_psid, response) {
     // Construct the message body
@@ -223,8 +218,9 @@ function callSendAPI(sender_psid, response) {
         message: response,
     }
 
+    // Before sending the message, set up typing on effect for upcoming messages and mark seen for received messages
     setupTypingOn(sender_psid)
-    setupMarkRead(sender_psid)
+    setupMarkSeen(sender_psid)
 
     // Send the HTTP request to the Messenger Platform
     axios({

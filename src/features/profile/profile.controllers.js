@@ -39,7 +39,7 @@ function setupProfile(req, res) {
                     },
                     {
                         type: 'postback',
-                        title: 'Khởi động lại cuộc hội thoại',
+                        title: 'Menu chính',
                         payload: 'RESTART',
                     },
                 ],
