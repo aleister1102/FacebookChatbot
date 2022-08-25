@@ -108,11 +108,6 @@ async function handlePostback(sender_psid, received_postback) {
     // Send the message to acknowledge the postback
 }
 
-async function setupSenderActions(sender_psid) {
-    await setupTypingOn(sender_psid)
-    await setupMarkRead(sender_psid)
-}
-
 function setupTypingOn(sender_psid) {
     let request_body = {
         recipient: {
@@ -227,6 +222,9 @@ function callSendAPI(sender_psid, response) {
         },
         message: response,
     }
+
+    setupTypingOn(sender_psid)
+    setupMarkRead(sender_psid)
 
     // Send the HTTP request to the Messenger Platform
     axios({
