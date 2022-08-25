@@ -156,7 +156,7 @@ function handleMaterialRequest(sender_psid) {
     callSendAPI(sender_psid, materialMenu)
 }
 
-function handleMemeRequest(sender_psid) {
+async function handleMemeRequest(sender_psid) {
     let meme_url = await getMeme()
 
     sendMeme(sender_psid, meme_url)
