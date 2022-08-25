@@ -107,7 +107,9 @@ async function handlePostback(sender_psid, received_postback) {
             break
         }
         default: {
-            callSendAPI(sender_psid, { text: 'Can not regconize that payload' })
+            callSendAPI(sender_psid, {
+                text: 'Rất tiếc, bot không thể xử lý yêu cầu này 😢',
+            })
         }
     }
 }
@@ -164,7 +166,10 @@ async function handleMemeRequest(sender_psid) {
         })
         console.log('Get meme', ' - Succeed!')
 
-        sendMeme(sender_psid, result.data.preview.pop())
+        await Promise.resolve((resolve, reject) => {
+            sendMeme(sender_psid, result.data.preview.pop())
+        })
+        
         sendMemeButtons(sender_psid)
     } catch (e) {
         console.log(e)
