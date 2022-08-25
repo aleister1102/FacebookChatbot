@@ -21,7 +21,7 @@ function setupProfile(req, res) {
         get_started: {
             payload: 'GET_STARTED',
         },
-        whitelisted_domains: ['https://aleister-botchat.herokuapp.com/'],
+        whitelisted_domains: [process.env.APP_DOMAIN],
         persistent_menu: [
             {
                 locale: 'default',
