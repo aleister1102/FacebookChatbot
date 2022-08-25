@@ -84,6 +84,11 @@ async function handlePostback(sender_psid, received_postback) {
     // Get the payload for the postback
     let payload = received_postback.payload
 
+    // Setup sender actions
+    if (payload === 'GET_STARTED') {
+        setupSenderActions(sender_psid)
+    }
+
     // Set the response based on the postback payload
     if (
         payload === 'GET_STARTED' ||
@@ -101,6 +106,33 @@ async function handlePostback(sender_psid, received_postback) {
 
     callSendAPI(sender_psid, response)
     // Send the message to acknowledge the postback
+}
+
+function setupSenderActions(sender_psid) {
+    setupTypingOn(sender_psid)
+    setupMarkRead(sender_psid)
+}
+
+function setupTypingOn(sender_psid) {
+    let request_body = {
+        recipient: {
+            id: sender_psid,
+        },
+        sender_action: 'typing_on',
+    }
+
+    callSendAPI(sender_psid, request_body)
+}
+
+function setupMarkRead(sender_id) {
+    let request_body = {
+        recipient: {
+            id: sender_id,
+        },
+        sender_action: 'mark_seen',
+    }
+
+    callSendAPI(sender_id, request_body)
 }
 
 async function generateWelcomeTemplate(sender_psid) {
@@ -158,6 +190,7 @@ async function uploadImage(url) {
             },
         },
     }
+
     try {
         result = await axios({
             method: 'POST',
