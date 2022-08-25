@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-function welcomeTemplate(user) {
+function mainMenuTemplate() {
     return {
         attachment: {
             type: 'template',
@@ -176,7 +176,7 @@ function memeButtonsTemplate() {
                 template_type: 'generic',
                 elements: [
                     {
-                        title: 'Hi vọng chiếc meme ở trên sẽ giúp bạn vui vẻ hơn 😊',
+                        title: 'Hi vọng chiếc meme này sẽ giúp bạn vui vẻ hơn 😊',
                         buttons: [
                             {
                                 type: 'postback',
@@ -197,7 +197,7 @@ function memeButtonsTemplate() {
 }
 
 module.exports = {
-    welcomeTemplate: welcomeTemplate,
+    mainMenuTemplate: mainMenuTemplate,
     eventTemplate: eventTemplate,
     materialTemplate: materialTemplate,
     memeButtonsTemplate: memeButtonsTemplate,

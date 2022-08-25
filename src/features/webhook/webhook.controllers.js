@@ -90,25 +90,21 @@ async function handlePostback(sender_psid, received_postback) {
         payload === 'RESTART' ||
         payload === 'MAIN_MENU'
     ) {
-        response = await handleGetStarted(sender_psid)
+        handleGetStarted(sender_psid)
     } else if (payload === 'EVENT') {
-        response = templates.eventTemplate()
+        handleEventRequest(sender_psid)
     } else if (payload === 'MATERIAL') {
-        response = templates.materialTemplate()
+        handleMaterialRequest(sender_psid)
     } else if (payload === 'MEME') {
-        response = await handleMemeRequest(sender_psid)
+        handleMemeRequest(sender_psid)
     }
-
-    callSendAPI(sender_psid, response)
-    // Send the message to acknowledge the postback
 }
 
 async function handleGetStarted(sender_psid) {
     let user = await getUserInfo(sender_psid)
 
     sendGreeting(sender_psid, user)
-
-    return templates.welcomeTemplate(user)
+    sendMainMenu(sender_psid)
 }
 
 async function getUserInfo(sender_psid) {
@@ -133,12 +129,26 @@ function sendGreeting(sender_psid, user) {
     callSendAPI(sender_psid, greeting)
 }
 
+function sendMainMenu(sender_psid) {
+    let mainMenu = templates.mainMenuTemplate()
+    callSendAPI(sender_psid, mainMenu)
+}
+
+function handleEventRequest(sender_psid) {
+    let eventMenu = templates.eventTemplate()
+    callSendAPI(sender_psid, eventMenu)
+}
+
+function handleMaterialRequest(sender_psid) {
+    let materialMenu = templates.materialTemplate()
+    callSendAPI(sender_psid, materialMenu)
+}
+
 async function handleMemeRequest(sender_psid) {
     let meme_url = await getMeme()
 
     sendMeme(sender_psid, meme_url)
-
-    return templates.memeButtonsTemplate()
+    sendMemeButtons(sender_psid)
 }
 
 async function getMeme() {
@@ -160,6 +170,11 @@ async function getMeme() {
 function sendMeme(sender_psid, meme_url) {
     let meme = templates.memeTemplate(meme_url)
     callSendAPI(sender_psid, meme)
+}
+
+function sendMemeButtons(sender_psid) {
+    let memeButtons = templates.memeButtonsTemplate()
+    callSendAPI(sender_psid, memeButtons)
 }
 
 async function uploadImage(url) {
