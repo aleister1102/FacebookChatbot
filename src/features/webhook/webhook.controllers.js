@@ -85,7 +85,11 @@ async function handlePostback(sender_psid, received_postback) {
     let payload = received_postback.payload
 
     // Set the response based on the postback payload
-    if (payload === 'GET_STARTED' || payload === 'RESTART') {
+    if (
+        payload === 'GET_STARTED' ||
+        payload === 'RESTART' ||
+        payload === 'MAIN_MENU'
+    ) {
         response = await generateWelcomeTemplate(sender_psid)
     } else if (payload === 'EVENT') {
         response = templates.eventTemplate()
