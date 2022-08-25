@@ -108,9 +108,9 @@ async function handlePostback(sender_psid, received_postback) {
     // Send the message to acknowledge the postback
 }
 
-function setupSenderActions(sender_psid) {
-    setupTypingOn(sender_psid)
-    setupMarkRead(sender_psid)
+async function setupSenderActions(sender_psid) {
+    await setupTypingOn(sender_psid)
+    await setupMarkRead(sender_psid)
 }
 
 function setupTypingOn(sender_psid) {
@@ -121,18 +121,30 @@ function setupTypingOn(sender_psid) {
         sender_action: 'typing_on',
     }
 
-    callSendAPI(sender_psid, request_body)
+    axios({
+        method: 'POST',
+        url: `https://graph.facebook.com/v14.0/${process.env.PAGE_ID}/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`,
+        data: request_body,
+    })
+        .then(() => console.log('Set up typing on', ' - Succeed!'))
+        .catch((error) => console.log('Set up typing on', '- Failed: ' + error))
 }
 
-function setupMarkRead(sender_id) {
+function setupMarkRead(sender_psid) {
     let request_body = {
         recipient: {
-            id: sender_id,
+            id: sender_psid,
         },
         sender_action: 'mark_seen',
     }
 
-    callSendAPI(sender_id, request_body)
+    axios({
+        method: 'POST',
+        url: `https://graph.facebook.com/v14.0/${process.env.PAGE_ID}/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`,
+        data: request_body,
+    })
+        .then(() => console.log('Set up mark seen', ' - Succeed!'))
+        .catch((error) => console.log('Set up mark seen', '- Failed: ' + error))
 }
 
 async function generateWelcomeTemplate(sender_psid) {
@@ -169,6 +181,7 @@ async function getMeme() {
             method: 'GET',
             url: 'https://meme-api.herokuapp.com/gimme',
         })
+        console.log('Get meme', ' - Succeed!')
     } catch (e) {
         console.log(e)
     }
@@ -197,6 +210,7 @@ async function uploadImage(url) {
             url: `https://graph.facebook.com/v14.0/me/message_attachments?access_token=${process.env.PAGE_ACCESS_TOKEN}`,
             data: request_body,
         })
+        console.log('Upload image', ' - Succeed!')
     } catch (e) {
         console.log(e)
     }
