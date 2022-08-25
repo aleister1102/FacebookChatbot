@@ -16,17 +16,17 @@ function welcomeTemplate(user) {
                             {
                                 type: 'postback',
                                 title: 'Thông tin hoạt động',
-                                payload: 'REQUEST_EVENT',
+                                payload: 'EVENT',
                             },
                             {
                                 type: 'postback',
                                 title: 'Tìm tài liệu',
-                                payload: 'REQUEST_MATERIAL',
+                                payload: 'MATERIAL',
                             },
                             {
                                 type: 'postback',
                                 title: 'Xem meme',
-                                payload: 'REQUEST_MEME',
+                                payload: 'MEME',
                             },
                         ],
                     },
@@ -52,7 +52,7 @@ function eventTemplate() {
                             {
                                 type: 'postback',
                                 title: 'Xem thông tin',
-                                payload: `REQUEST_EVENT_2`,
+                                payload: `EVENT_2`,
                             },
                         ],
                     },
@@ -64,7 +64,7 @@ function eventTemplate() {
                             {
                                 type: 'postback',
                                 title: 'Xem thông tin',
-                                payload: `REQUEST_EVENT_2`,
+                                payload: `EVENT_2`,
                             },
                         ],
                     },
@@ -76,7 +76,7 @@ function eventTemplate() {
                             {
                                 type: 'postback',
                                 title: 'Xem thông tin',
-                                payload: `REQUEST_EVENT_3`,
+                                payload: `EVENT_3`,
                             },
                         ],
                     },
@@ -88,7 +88,18 @@ function eventTemplate() {
                             {
                                 type: 'postback',
                                 title: 'Xem thông tin',
-                                payload: `REQUEST_EVENT_4`,
+                                payload: `EVENT_4`,
+                            },
+                        ],
+                    },
+                    {
+                        title: `Trở về`,
+                        image_url: `https://images.pexels.com/photos/374918/pexels-photo-374918.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
+                        buttons: [
+                            {
+                                type: 'postback',
+                                title: 'Quay về menu chính',
+                                payload: `MAIN_MENU`,
                             },
                         ],
                     },
@@ -112,7 +123,7 @@ function materialTemplate() {
                             {
                                 type: 'postback',
                                 title: 'Xem tài liệu',
-                                payload: `REQUEST_MATERIAL_1`,
+                                payload: `MATERIAL_1`,
                             },
                         ],
                     },
@@ -123,7 +134,18 @@ function materialTemplate() {
                             {
                                 type: 'postback',
                                 title: 'Xem tài liệu',
-                                payload: `REQUEST_MATERIAL_2`,
+                                payload: `MATERIAL_2`,
+                            },
+                        ],
+                    },
+                    {
+                        title: `Trở về`,
+                        image_url: `https://images.pexels.com/photos/374918/pexels-photo-374918.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
+                        buttons: [
+                            {
+                                type: 'postback',
+                                title: 'Quay về menu chính',
+                                payload: `MAIN_MENU`,
                             },
                         ],
                     },
@@ -147,7 +169,18 @@ function memeTemplate(attachment_id) {
                             {
                                 type: 'postback',
                                 title: 'Xem meme khác',
-                                payload: 'REQUEST_MEME',
+                                payload: 'MEME',
+                            },
+                        ],
+                    },
+                    {
+                        title: `Trở về`,
+                        image_url: `https://images.pexels.com/photos/374918/pexels-photo-374918.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
+                        buttons: [
+                            {
+                                type: 'postback',
+                                title: 'Quay về menu chính',
+                                payload: `MAIN_MENU`,
                             },
                         ],
                     },
