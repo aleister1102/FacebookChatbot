@@ -1,5 +1,4 @@
 const axios = require('axios')
-const { memeTemplate } = require('./webhook.templates')
 
 function getWebhook(req, res) {
     // Parse the query params
