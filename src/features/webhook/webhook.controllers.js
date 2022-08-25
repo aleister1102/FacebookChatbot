@@ -138,7 +138,7 @@ async function handleMemeRequest(sender_psid) {
 
     sendMeme(sender_psid, meme_url)
 
-    return templates.memeButtonsTemplate(attachment_id)
+    return templates.memeButtonsTemplate()
 }
 
 async function getMeme() {

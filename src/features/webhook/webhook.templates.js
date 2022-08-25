@@ -168,7 +168,7 @@ function memeTemplate(meme_url) {
     }
 }
 
-function memeButtonsTemplate(attachment_id) {
+function memeButtonsTemplate() {
     return {
         attachment: {
             type: 'template',
