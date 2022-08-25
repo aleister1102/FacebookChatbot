@@ -40,7 +40,7 @@ function setupProfile(req, res) {
                     {
                         type: 'postback',
                         title: 'Menu chính',
-                        payload: 'RESTART',
+                        payload: 'MAIN_MENU',
                     },
                 ],
             },

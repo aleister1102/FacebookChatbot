@@ -85,18 +85,30 @@ async function handlePostback(sender_psid, received_postback) {
     let payload = received_postback.payload
 
     // Set the response based on the postback payload
-    if (
-        payload === 'GET_STARTED' ||
-        payload === 'RESTART' ||
-        payload === 'MAIN_MENU'
-    ) {
-        handleGetStarted(sender_psid)
-    } else if (payload === 'EVENT') {
-        handleEventRequest(sender_psid)
-    } else if (payload === 'MATERIAL') {
-        handleMaterialRequest(sender_psid)
-    } else if (payload === 'MEME') {
-        handleMemeRequest(sender_psid)
+    switch (payload) {
+        case 'GET_STARTED': {
+            handleGetStarted(sender_psid)
+            break
+        }
+        case 'MAIN_MENU': {
+            sendMainMenu(sender_psid)
+            break
+        }
+        case 'EVENT': {
+            handleEventRequest(sender_psid)
+            break
+        }
+        case 'MATERIAL': {
+            handleMaterialRequest(sender_psid)
+            break
+        }
+        case 'MEME': {
+            handleMemeRequest(sender_psid)
+            break
+        }
+        default: {
+            callSendAPI(sender_psid, { text: 'Can not regconize that payload' })
+        }
     }
 }
 
@@ -147,7 +159,7 @@ function handleMaterialRequest(sender_psid) {
 async function handleMemeRequest(sender_psid) {
     let meme_url = await getMeme()
 
-    sendMeme(sender_psid, meme_url)
+    await sendMeme(sender_psid, meme_url)
     sendMemeButtons(sender_psid)
 }
 
@@ -167,9 +179,10 @@ async function getMeme() {
     return result.data.preview.pop()
 }
 
-function sendMeme(sender_psid, meme_url) {
+async function sendMeme(sender_psid, meme_url) {
     let meme = templates.memeTemplate(meme_url)
     callSendAPI(sender_psid, meme)
+    return
 }
 
 function sendMemeButtons(sender_psid) {
