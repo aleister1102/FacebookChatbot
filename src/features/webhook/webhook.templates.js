@@ -207,6 +207,34 @@ function subjectTemplate(subjects) {
     }
 }
 
+function materialButtonsTemplate() {
+    return {
+        attachment: {
+            type: 'template',
+            payload: {
+                template_type: 'generic',
+                elements: [
+                    {
+                        title: 'Hi vọng các tài liệu trên sẽ giúp bạn học tập tốt hơn 😄',
+                        buttons: [
+                            {
+                                type: 'postback',
+                                title: 'Tìm tài liệu khác',
+                                payload: 'MATERIAL',
+                            },
+                            {
+                                type: 'postback',
+                                title: 'Quay về menu chính',
+                                payload: 'MAIN_MENU',
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+    }
+}
+
 module.exports = {
     mainMenuTemplate: mainMenuTemplate,
     eventTemplate: eventTemplate,
@@ -214,4 +242,5 @@ module.exports = {
     memeButtonsTemplate: memeButtonsTemplate,
     memeTemplate: memeTemplate,
     subjectTemplate: subjectTemplate,
+    materialButtonsTemplate
 }

@@ -4,7 +4,7 @@ const {
 } = require('../../utils/nonAccentVietnamese')
 
 let isRequestingMaterial = false
-let materialSubject = ''
+let requestingSubject = ''
 
 const physicsSubjects = [
     { name: 'Vật lý đại cương 1', payload: 'PHYSICS_1' },
@@ -81,23 +81,21 @@ function handleMessage(sender_psid, received_message) {
     // Checks if the message contains text
     if (received_message.text) {
         if (isRequestingMaterial) {
-            showMaterialName(sender_psid, received_message.text)
+            showSubjects(sender_psid, received_message.text)
+        } else {
+            // Create the payload for a basic text message, which
+            // will be added to the body of our request to the Send API
+            response = {
+                text: `Chào mừng bạn đến với Aleister's chatbot! Bọn mình sẽ trả lời lại cho bạn sớm nhất có thể!`,
+            }
+
+            callSendAPI(sender_psid, response)
         }
-        // Create the payload for a basic text message, which
-        // will be added to the body of our request to the Send API
-        response = {
-            text: `Chào mừng bạn đến với Aleister's chatbot! Bọn mình sẽ trả lời lại cho bạn sớm nhất có thể!`,
-        }
-    }
-    // TODO: handle attachments
-    else if (received_message.attachments) {
+    } else if (received_message.attachments) {
         // Get the URL of the message attachment
         // let attachment_url = received_message.attachments[0].payload.url
         // response = templates.askTemplate(attachment_url)
     }
-
-    // Send the response message
-    callSendAPI(sender_psid, response)
 }
 
 const templates = require('./webhook.templates')
@@ -192,40 +190,45 @@ function showMaterialMenu(sender_psid) {
 }
 
 function handleMaterialRequest(sender_psid, subject) {
-    askForMaterialName(sender_psid)
+    askForSubject(sender_psid)
     isRequestingMaterial = true
-    materialSubject = subject
+    requestingSubject = subject
 }
 
-function askForMaterialName(sender_psid) {
+function askForSubject(sender_psid) {
     let askQuestion = {
         text: 'Bạn có thể cho mình biết tên môn học mà bạn muốn tìm được không 😉?',
     }
     callSendAPI(sender_psid, askQuestion)
 }
 
-function matchMaterial(subject, receivedName) {
-    console.log("🌸 ~ file: webhook.controllers.js ~ line 208 ~ matchMaterial ~ requestedName", typeof receivedName);
+function matchSubject(subject, receivedName) {
     subject = toLowerCaseNonAccentVietnamese(subject)
     receivedName = toLowerCaseNonAccentVietnamese(receivedName)
 
     return receivedName.split(' ').find((word) => subject.includes(word))
 }
 
-function searchMaterial(subjects, receivedName) {
-    return subjects.filter((suject) => matchMaterial(suject.name, receivedName))
+function searchSubject(subjects, receivedName) {
+    return subjects.filter((suject) => matchSubject(suject.name, receivedName))
 }
 
-function showMaterialName(sender_psid, receivedName) {
-    let foundMaterials
+function showSubjects(sender_psid, receivedName) {
+    let foundSubjects
+    let response
 
-    if (materialSubject === 'PHYSICS') {
-        foundMaterials = searchMaterial(physicsSubjects, receivedName)
-    } else if (materialSubject === 'MATH') {
-        foundMaterials = searchMaterial(mathSubjects, receivedName)
+    if (requestingSubject === 'PHYSICS') {
+        foundSubjects = searchSubject(physicsSubjects, receivedName)
+    } else if (requestingSubject === 'MATH') {
+        foundSubjects = searchSubject(mathSubjects, receivedName)
     }
 
-    let response = templates.subjectTemplate(foundMaterials)
+    if (foundSubjects) {
+        response = templates.subjectTemplate(foundSubjects)
+    } else {
+        response = { text: 'Rất tiếc, bot không tìm thấy môn học đó 😔' }
+    }
+
     callSendAPI(sender_psid, response)
     isRequestingMaterial = false
 }
