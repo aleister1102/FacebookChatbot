@@ -3,8 +3,8 @@ const {
     toLowerCaseNonAccentVietnamese,
 } = require('../../utils/nonAccentVietnamese')
 
-const isRequestingMaterial = false
-const materialSubject = 'PHYSICS'
+let isRequestingMaterial = false
+let materialSubject = ''
 
 const physicsSubjects = [
     { name: 'Vật lý đại cương 1', payload: 'PHYSICS_1' },
@@ -16,10 +16,10 @@ const physicsSubjects = [
 ]
 
 const mathSubjects = [
-    'Vi tích phân 1B',
-    'Vi tích phân 2B',
-    'Đại số tuyến tính',
-    'Xác chết thống kê',
+    { name: 'Vi tích phân 1B', payload: 'MATH_1B' },
+    { name: 'Vi tích phân 2B', payload: 'MATH_2B' },
+    { name: 'Đại số tuyến tính', payload: 'MATH_LA' },
+    { name: 'Xác chết thống kê', payload: 'MATH_PROB_STAT' },
 ]
 
 function getWebhook(req, res) {
