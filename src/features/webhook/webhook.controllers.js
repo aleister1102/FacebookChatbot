@@ -10,7 +10,7 @@ const physicsSubjects = [
     { name: 'Vật lý đại cương 1', payload: 'PHYSICS_1' },
     { name: 'Vật lý đại cương 2', payload: 'PHYSICS_2' },
     { name: 'Vật lý đại cương 3', payload: 'PHYSICS_3' },
-    { name: 'Vật lý hại điện', payload: 'PHYSICS_MORDENT' },
+    { name: 'Vật lý hại điện', payload: 'PHYSICS_MODERN' },
     { name: 'Trường điện từ', payload: 'PHYSICS_EM_FIELD' },
     { name: 'Cơ học lượng tử', payload: 'PHYSICS_QUANTUM' },
 ]
@@ -79,7 +79,19 @@ function handleMessage(sender_psid, received_message) {
     if (received_message.text) {
         if (isRequestingMaterial) {
             showSubjects(sender_psid, received_message.text)
-        } else {
+        } else if (received_message.quick_reply) {
+            console.log('Received quick reply!')
+            let payload = received_message.quick_reply.payload
+
+            if (
+                physicsSubjects.find(
+                    (subject) => subject.payload === payload,
+                ) ||
+                mathSubjects.find((subject) => subject.payload === payload)
+            ) {
+                sendMaterial(sender_psid, subject)
+                sendMaterialButtons(sender_psid)
+            }
         }
     } else if (received_message.attachments) {
         // Get the URL of the message attachment
@@ -92,8 +104,6 @@ const { templates } = require('./webhook.templates')
 
 // Handles messaging_postbacks events
 async function handlePostback(sender_psid, received_postback) {
-    let response
-
     // Get the payload for the postback
     let payload = received_postback.payload
 
@@ -132,14 +142,6 @@ async function handlePostback(sender_psid, received_postback) {
                 text: 'Rất tiếc, bot không thể xử lý yêu cầu này 😢',
             })
         }
-    }
-
-    if (
-        physicsSubjects.find((subject) => subject.payload === payload) ||
-        mathSubjects.find((subject) => subject.payload === payload)
-    ) {
-        sendMaterial(sender_psid, subject)
-        sendMaterialButtons(sender_psid)
     }
 }
 
@@ -195,7 +197,7 @@ function handleMaterialRequest(sender_psid, subject) {
 
 function askForSubject(sender_psid) {
     let askQuestion = {
-        text: 'Bạn có thể cho mình biết tên môn học mà bạn muốn tìm được không 😉?',
+        text: 'Bạn có thể cho bot biết tên môn học mà bạn muốn tìm được không 😉?',
     }
     callSendAPI(sender_psid, askQuestion)
 }
