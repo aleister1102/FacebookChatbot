@@ -124,7 +124,7 @@ function materialTemplate() {
                             {
                                 type: 'postback',
                                 title: 'Xem tài liệu',
-                                payload: `MATERIAL_1`,
+                                payload: `MATERIAL_PHYSICS`,
                             },
                         ],
                     },
@@ -135,7 +135,7 @@ function materialTemplate() {
                             {
                                 type: 'postback',
                                 title: 'Xem tài liệu',
-                                payload: `MATERIAL_2`,
+                                payload: `MATERIAL_MATH`,
                             },
                         ],
                     },
@@ -196,10 +196,22 @@ function memeButtonsTemplate() {
     }
 }
 
+function subjectTemplate(subjects) {
+    return {
+        text: 'Đây là các môn học mà bot đã tìm thấy 🤗: ',
+        quick_replies: subjects.map((subject) => ({
+            content_type: 'text',
+            title: subject.name,
+            payload: subject.payload,
+        })),
+    }
+}
+
 module.exports = {
     mainMenuTemplate: mainMenuTemplate,
     eventTemplate: eventTemplate,
     materialTemplate: materialTemplate,
     memeButtonsTemplate: memeButtonsTemplate,
     memeTemplate: memeTemplate,
+    subjectTemplate: subjectTemplate,
 }

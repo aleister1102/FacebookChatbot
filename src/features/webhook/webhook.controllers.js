@@ -1,4 +1,26 @@
 const axios = require('axios')
+const {
+    toLowerCaseNonAccentVietnamese,
+} = require('../../utils/nonAccentVietnamese')
+
+const isRequestingMaterial = false
+const materialSubject = 'PHYSICS'
+
+const physicsSubjects = [
+    { name: 'Vật lý đại cương 1', payload: 'PHYSICS_1' },
+    { name: 'Vật lý đại cương 2', payload: 'PHYSICS_2' },
+    { name: 'Vật lý đại cương 3', payload: 'PHYSICS_3' },
+    { name: 'Vật lý hại điện', payload: 'PHYSICS_MORDEN' },
+    { name: 'Trường điện từ', payload: 'PHYSICS_EM_FIELD' },
+    { name: 'Cơ học lượng tử', payload: 'PHYSICS_QUANTUM' },
+]
+
+const mathSubjects = [
+    'Vi tích phân 1B',
+    'Vi tích phân 2B',
+    'Đại số tuyến tính',
+    'Xác chết thống kê',
+]
 
 function getWebhook(req, res) {
     // Parse the query params
@@ -58,10 +80,13 @@ function handleMessage(sender_psid, received_message) {
 
     // Checks if the message contains text
     if (received_message.text) {
+        if (isRequestingMaterial) {
+            showMaterialName(sender_psid, received_message.text)
+        }
         // Create the payload for a basic text message, which
         // will be added to the body of our request to the Send API
         response = {
-            text: `You sent the message: "${received_message.text}"`,
+            text: `Chào mừng bạn đến với Aleister's chatbot! Bọn mình sẽ trả lời lại cho bạn sớm nhất có thể!`,
         }
     }
     // TODO: handle attachments
@@ -95,11 +120,19 @@ async function handlePostback(sender_psid, received_postback) {
             break
         }
         case 'EVENT': {
-            handleEventRequest(sender_psid)
+            showEventMenu(sender_psid)
             break
         }
         case 'MATERIAL': {
-            handleMaterialRequest(sender_psid)
+            showMaterialMenu(sender_psid)
+            break
+        }
+        case 'MATERIAL_PHYSICS': {
+            handleMaterialRequest(sender_psid, 'PHYSICS')
+            break
+        }
+        case 'MATERIAL_MATH': {
+            handleMaterialRequest(sender_psid, 'MATH')
             break
         }
         case 'MEME': {
@@ -148,14 +181,52 @@ function sendMainMenu(sender_psid) {
     callSendAPI(sender_psid, mainMenu)
 }
 
-function handleEventRequest(sender_psid) {
+function showEventMenu(sender_psid) {
     let eventMenu = templates.eventTemplate()
     callSendAPI(sender_psid, eventMenu)
 }
 
-function handleMaterialRequest(sender_psid) {
+function showMaterialMenu(sender_psid) {
     let materialMenu = templates.materialTemplate()
     callSendAPI(sender_psid, materialMenu)
+}
+
+function handleMaterialRequest(sender_psid, subject) {
+    askForMaterialName(sender_psid)
+    isRequestingMaterial = true
+    materialSubject = subject
+}
+
+function askForMaterialName(sender_psid) {
+    let askQuestion = {
+        text: 'Bạn có thể cho mình biết tên môn học mà bạn muốn tìm được không 😉?',
+    }
+    callSendAPI(sender_psid, askQuestion)
+}
+
+function matchMaterial(subject, requestedName) {
+    subject = toLowerCaseNonAccentVietnamese(subject)
+    requestedName = toLowerCaseNonAccentVietnamese(requestedName)
+
+    return requestedName.split(' ').find((word) => subject.includes(word))
+}
+
+function searchMaterial(subjects, requestedName) {
+    return subjects.filter((suject) => matchMaterial(suject, requestedName))
+}
+
+function showMaterialName(sender_psid, requestedName) {
+    let foundMaterials
+
+    if (materialSubject === 'PHYSICS') {
+        foundMaterials = searchMaterial(physicsSubjects, requestedName)
+    } else if (materialSubject === 'MATH') {
+        foundMaterials = searchMaterial(mathSubjects, requestedName)
+    }
+
+    let response = templates.subjectTemplate(foundMaterials)
+    callSendAPI(sender_psid, response)
+    isRequestingMaterial = false
 }
 
 async function handleMemeRequest(sender_psid) {
@@ -169,7 +240,7 @@ async function handleMemeRequest(sender_psid) {
         await Promise.resolve((resolve, reject) => {
             sendMeme(sender_psid, result.data.preview.pop())
         })
-        
+
         sendMemeButtons(sender_psid)
     } catch (e) {
         console.log(e)
