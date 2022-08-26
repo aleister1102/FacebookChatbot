@@ -242,7 +242,7 @@ function sendMaterialButtons(sender_psid) {
     callSendAPI(sender_psid, response)
 }
 
-function handleMemeRequest(sender_psid) {
+async function handleMemeRequest(sender_psid) {
     try {
         let result = await axios({
             method: 'GET',
