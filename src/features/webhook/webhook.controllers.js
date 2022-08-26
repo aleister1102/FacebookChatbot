@@ -10,7 +10,7 @@ const physicsSubjects = [
     { name: 'Vật lý đại cương 1', payload: 'PHYSICS_1' },
     { name: 'Vật lý đại cương 2', payload: 'PHYSICS_2' },
     { name: 'Vật lý đại cương 3', payload: 'PHYSICS_3' },
-    { name: 'Vật lý hại điện', payload: 'PHYSICS_MORDEN' },
+    { name: 'Vật lý hại điện', payload: 'PHYSICS_MORDENT' },
     { name: 'Trường điện từ', payload: 'PHYSICS_EM_FIELD' },
     { name: 'Cơ học lượng tử', payload: 'PHYSICS_QUANTUM' },
 ]
@@ -76,20 +76,10 @@ function postWebhook(req, res) {
 
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
-    let response
-
-    // Checks if the message contains text
     if (received_message.text) {
         if (isRequestingMaterial) {
             showSubjects(sender_psid, received_message.text)
         } else {
-            // Create the payload for a basic text message, which
-            // will be added to the body of our request to the Send API
-            response = {
-                text: `Chào mừng bạn đến với Aleister's chatbot! Bọn mình sẽ trả lời lại cho bạn sớm nhất có thể!`,
-            }
-
-            callSendAPI(sender_psid, response)
         }
     } else if (received_message.attachments) {
         // Get the URL of the message attachment
@@ -143,6 +133,14 @@ async function handlePostback(sender_psid, received_postback) {
             })
         }
     }
+
+    if (
+        physicsSubjects.find((subject) => subject.payload === payload) ||
+        mathSubjects.find((subject) => subject.payload === payload)
+    ) {
+        sendMaterial(sender_psid, subject)
+        sendMaterialButtons(sender_psid)
+    }
 }
 
 async function handleGetStarted(sender_psid) {
@@ -180,12 +178,12 @@ function sendMainMenu(sender_psid) {
 }
 
 function showEventMenu(sender_psid) {
-    let eventMenu = templates.eventTemplate()
+    let eventMenu = templates.eventMenuTemplate()
     callSendAPI(sender_psid, eventMenu)
 }
 
 function showMaterialMenu(sender_psid) {
-    let materialMenu = templates.materialTemplate()
+    let materialMenu = templates.materialMenuTemplate()
     callSendAPI(sender_psid, materialMenu)
 }
 
@@ -231,6 +229,16 @@ function showSubjects(sender_psid, receivedName) {
 
     callSendAPI(sender_psid, response)
     isRequestingMaterial = false
+}
+
+function sendMaterial(sender_psid, subject) {
+    let response = templates.materialTemplate(subject)
+    callSendAPI(sender_psid, response)
+}
+
+function sendMaterialButtons(sender_psid) {
+    let response = templates.materialButtonsTemplate()
+    callSendAPI(sender_psid, response)
 }
 
 async function handleMemeRequest(sender_psid) {

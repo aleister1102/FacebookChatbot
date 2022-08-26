@@ -1,5 +1,3 @@
-const axios = require('axios')
-
 function mainMenuTemplate() {
     return {
         attachment: {
@@ -37,7 +35,7 @@ function mainMenuTemplate() {
     }
 }
 
-function eventTemplate() {
+function eventMenuTemplate() {
     return {
         attachment: {
             type: 'template',
@@ -110,7 +108,7 @@ function eventTemplate() {
     }
 }
 
-function materialTemplate() {
+function materialMenuTemplate() {
     return {
         attachment: {
             type: 'template',
@@ -147,6 +145,49 @@ function materialTemplate() {
                                 type: 'postback',
                                 title: 'Quay về menu chính',
                                 payload: `MAIN_MENU`,
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+    }
+}
+
+function subjectTemplate(subjects) {
+    return {
+        text: 'Đây là các môn học mà bot đã tìm thấy 🤗: ',
+        quick_replies: subjects.map((subject) => ({
+            content_type: 'text',
+            title: subject.name,
+            payload: subject.payload,
+        })),
+    }
+}
+
+function materialTemplate(subject) {
+    return { text: `Đây là tài liệu về ${subject} mà bạn cần` }
+}
+
+function materialButtonsTemplate() {
+    return {
+        attachment: {
+            type: 'template',
+            payload: {
+                template_type: 'generic',
+                elements: [
+                    {
+                        title: 'Hi vọng các tài liệu trên sẽ giúp bạn học tập tốt hơn 😄',
+                        buttons: [
+                            {
+                                type: 'postback',
+                                title: 'Tìm tài liệu khác',
+                                payload: 'MATERIAL',
+                            },
+                            {
+                                type: 'postback',
+                                title: 'Quay về menu chính',
+                                payload: 'MAIN_MENU',
                             },
                         ],
                     },
@@ -196,51 +237,18 @@ function memeButtonsTemplate() {
     }
 }
 
-function subjectTemplate(subjects) {
-    return {
-        text: 'Đây là các môn học mà bot đã tìm thấy 🤗: ',
-        quick_replies: subjects.map((subject) => ({
-            content_type: 'text',
-            title: subject.name,
-            payload: subject.payload,
-        })),
-    }
-}
-
-function materialButtonsTemplate() {
-    return {
-        attachment: {
-            type: 'template',
-            payload: {
-                template_type: 'generic',
-                elements: [
-                    {
-                        title: 'Hi vọng các tài liệu trên sẽ giúp bạn học tập tốt hơn 😄',
-                        buttons: [
-                            {
-                                type: 'postback',
-                                title: 'Tìm tài liệu khác',
-                                payload: 'MATERIAL',
-                            },
-                            {
-                                type: 'postback',
-                                title: 'Quay về menu chính',
-                                payload: 'MAIN_MENU',
-                            },
-                        ],
-                    },
-                ],
-            },
-        },
-    }
-}
-
 module.exports = {
-    mainMenuTemplate: mainMenuTemplate,
-    eventTemplate: eventTemplate,
-    materialTemplate: materialTemplate,
-    memeButtonsTemplate: memeButtonsTemplate,
-    memeTemplate: memeTemplate,
-    subjectTemplate: subjectTemplate,
-    materialButtonsTemplate
+    templates: {
+        mainMenuTemplate,
+
+        eventMenuTemplate,
+
+        materialMenuTemplate,
+        subjectTemplate,
+        materialTemplate,
+        materialButtonsTemplate,
+
+        memeTemplate,
+        memeButtonsTemplate,
+    },
 }
