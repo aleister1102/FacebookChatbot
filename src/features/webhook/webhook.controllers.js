@@ -204,25 +204,25 @@ function askForMaterialName(sender_psid) {
     callSendAPI(sender_psid, askQuestion)
 }
 
-function matchMaterial(subject, requestedName) {
-    console.log("🌸 ~ file: webhook.controllers.js ~ line 208 ~ matchMaterial ~ requestedName", requestedName);
+function matchMaterial(subject, receivedName) {
+    console.log("🌸 ~ file: webhook.controllers.js ~ line 208 ~ matchMaterial ~ requestedName", receivedName);
     subject = toLowerCaseNonAccentVietnamese(subject)
-    requestedName = toLowerCaseNonAccentVietnamese(requestedName)
+    receivedName = toLowerCaseNonAccentVietnamese(receivedName)
 
-    return requestedName.split(' ').find((word) => subject.includes(word))
+    return receivedName.split(' ').find((word) => subject.includes(word))
 }
 
-function searchMaterial(subjects, requestedName) {
-    return subjects.filter((suject) => matchMaterial(suject, requestedName))
+function searchMaterial(subjects, receivedName) {
+    return subjects.filter((suject) => matchMaterial(suject, receivedName))
 }
 
-function showMaterialName(sender_psid, requestedName) {
+function showMaterialName(sender_psid, receivedName) {
     let foundMaterials
 
     if (materialSubject === 'PHYSICS') {
-        foundMaterials = searchMaterial(physicsSubjects, requestedName)
+        foundMaterials = searchMaterial(physicsSubjects, receivedName)
     } else if (materialSubject === 'MATH') {
-        foundMaterials = searchMaterial(mathSubjects, requestedName)
+        foundMaterials = searchMaterial(mathSubjects, receivedName)
     }
 
     let response = templates.subjectTemplate(foundMaterials)
