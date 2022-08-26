@@ -205,7 +205,7 @@ function askForMaterialName(sender_psid) {
 }
 
 function matchMaterial(subject, receivedName) {
-    console.log("🌸 ~ file: webhook.controllers.js ~ line 208 ~ matchMaterial ~ requestedName", receivedName);
+    console.log("🌸 ~ file: webhook.controllers.js ~ line 208 ~ matchMaterial ~ requestedName", typeof receivedName);
     subject = toLowerCaseNonAccentVietnamese(subject)
     receivedName = toLowerCaseNonAccentVietnamese(receivedName)
 
