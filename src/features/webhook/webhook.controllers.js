@@ -252,6 +252,7 @@ async function handleMemeRequest(sender_psid) {
 
         await Promise.resolve((resolve, reject) => {
             sendMeme(sender_psid, result.data.preview.pop())
+            resolve()
         })
 
         sendMemeButtons(sender_psid)
