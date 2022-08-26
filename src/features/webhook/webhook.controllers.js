@@ -196,7 +196,7 @@ function handleMaterialRequest(sender_psid, subject) {
 
 function askForSubject(sender_psid) {
     let askQuestion = {
-        text: 'Bạn có thể cho bot biết tên môn học mà bạn muốn tìm được không 😉?',
+        text: 'Nhập tên môn học để bot tìm tài liệu cho nè 😉?',
     }
     callSendAPI(sender_psid, askQuestion)
 }

@@ -121,7 +121,7 @@ function materialMenuTemplate() {
                         buttons: [
                             {
                                 type: 'postback',
-                                title: 'Xem tài liệu',
+                                title: 'Tìm kiếm',
                                 payload: `MATERIAL_PHYSICS`,
                             },
                         ],
@@ -132,7 +132,7 @@ function materialMenuTemplate() {
                         buttons: [
                             {
                                 type: 'postback',
-                                title: 'Xem tài liệu',
+                                title: 'Tìm kiếm',
                                 payload: `MATERIAL_MATH`,
                             },
                         ],
@@ -166,7 +166,7 @@ function subjectTemplate(subjects) {
 }
 
 function materialTemplate(subject) {
-    return { text: `Đây là tài liệu về ${subject} mà bạn cần` }
+    return { text: `Đây là các tài liệu về ${subject} mà bạn cần: ` }
 }
 
 function materialButtonsTemplate() {
