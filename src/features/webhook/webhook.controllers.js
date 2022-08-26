@@ -242,7 +242,7 @@ function sendMaterialButtons(sender_psid) {
     callSendAPI(sender_psid, response)
 }
 
-async function handleMemeRequest(sender_psid) {
+function handleMemeRequest(sender_psid) {
     try {
         let result = await axios({
             method: 'GET',
@@ -250,11 +250,7 @@ async function handleMemeRequest(sender_psid) {
         })
         console.log('Get meme', ' - Succeed!')
 
-        await Promise.resolve((resolve, reject) => {
-            sendMeme(sender_psid, result.data.preview.pop())
-            resolve()
-        })
-
+        sendMeme(sender_psid, result.data.preview.pop())
         sendMemeButtons(sender_psid)
     } catch (e) {
         console.log(e)
