@@ -88,7 +88,7 @@ function handleMessage(sender_psid, received_message) {
     }
 }
 
-const templates = require('./webhook.templates')
+const { templates } = require('./webhook.templates')
 
 // Handles messaging_postbacks events
 async function handlePostback(sender_psid, received_postback) {
