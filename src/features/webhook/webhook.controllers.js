@@ -80,7 +80,6 @@ function handleMessage(sender_psid, received_message) {
         if (isRequestingMaterial) {
             showSubjects(sender_psid, received_message.text)
         } else if (received_message.quick_reply) {
-            console.log('Received quick reply!')
             let payload = received_message.quick_reply.payload
 
             if (
@@ -89,7 +88,7 @@ function handleMessage(sender_psid, received_message) {
                 ) ||
                 mathSubjects.find((subject) => subject.payload === payload)
             ) {
-                sendMaterial(sender_psid, subject)
+                sendMaterial(sender_psid, received_message.text)
                 sendMaterialButtons(sender_psid)
             }
         }
