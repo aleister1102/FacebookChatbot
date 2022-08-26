@@ -213,7 +213,7 @@ function matchMaterial(subject, receivedName) {
 }
 
 function searchMaterial(subjects, receivedName) {
-    return subjects.filter((suject) => matchMaterial(suject, receivedName))
+    return subjects.filter((suject) => matchMaterial(suject.name, receivedName))
 }
 
 function showMaterialName(sender_psid, receivedName) {
