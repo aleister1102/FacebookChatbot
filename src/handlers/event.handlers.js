@@ -54,7 +54,7 @@ async function findEvent(event_id) {
     let event
 
     try {
-        event = await Event.find({ _id: { $oid: event_id } })
+        event = await Event.find({ _id: event_id })
         console.log('Found event based on payload!')
     } catch (e) {
         console.log(e)
