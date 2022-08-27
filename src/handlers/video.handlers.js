@@ -10,4 +10,4 @@ function handleVideoRequest(sender_psid) {
     callSendAPI(sender_psid, video)
 }
 
-module.export = { handleVideoRequest }
+module.exports = { handleVideoRequest }

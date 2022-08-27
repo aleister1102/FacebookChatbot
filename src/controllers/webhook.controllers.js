@@ -70,12 +70,13 @@ function handleMessage(sender_psid, received_message) {
 }
 
 // Handles messaging_postbacks events
-async function handlePostback(sender_psid, received_postback) {
+function handlePostback(sender_psid, received_postback) {
     // Get the payload for the postback
     let payload = received_postback.payload
 
     if (payload.includes('EVENT_')) {
         handlers.showEventDetails(sender_psid, payload.split('_')[1])
+        return
     }
 
     // Set the response based on the postback payload
