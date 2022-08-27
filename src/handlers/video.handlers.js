@@ -4,7 +4,7 @@ const templates = { ...require('../templates/video.templates') }
 
 // smaller than 25MB
 const representationVideo =
-    'https://www.youtube.com/watch?v=I10XB1-IIbA'
+    'https://www.youtube.com/watch?v=jNQXAC9IVRw'
 
 function handleVideoRequest(sender_psid) {
     let video = templates.VideoTemplate(representationVideo)
