@@ -48,9 +48,9 @@ async function handleMemeRequest(sender_psid) {
         })
 
         let user = await User.findOne({ psid: sender_psid })
-
+        
         if (hoursDiff(user.updatedAt, Date.now()) >= 24) {
-            resetMemeCounter(sender_psid)
+            await resetMemeCounter(sender_psid)
         }
 
         if (user.meme_counter > 0) {
