@@ -40,8 +40,9 @@ async function resetMemeCounter(sender_psid) {
     } catch (e) {
         console.log(e)
     }
-    return true
 }
+
+
 
 async function handleMemeRequest(sender_psid) {
     try {
@@ -54,8 +55,10 @@ async function handleMemeRequest(sender_psid) {
 
         if (hoursDiff(user.updatedAt, Date.now()) >= 24) {
             await resetMemeCounter(sender_psid)
+            sendMeme(sender_psid, result.data.preview.pop())
+            showMemeButtons(sender_psid)
         }
-
+        
         if (user.meme_counter > 0) {
             sendMeme(sender_psid, result.data.preview.pop())
             showMemeButtons(sender_psid)
