@@ -1,7 +1,7 @@
 const callSendAPI = require('../utils/callSendAPI')
 
 const handlers = {
-    ...require('../handlers/welcome.handlers'),
+    ...require('../handlers/initialize.handlers'),
     ...require('../handlers/event.handlers'),
     ...require('../handlers/meme.handlers'),
 }

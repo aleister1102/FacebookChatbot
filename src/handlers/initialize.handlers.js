@@ -2,12 +2,15 @@ const axios = require('axios')
 
 const callSendAPI = require('../utils/callSendAPI')
 
-const templates = { ...require('../templates/welcome.templates') }
+const User = require('../models/User')
+
+const templates = { ...require('../templates/initialize.templates') }
 
 async function handleGetStarted(sender_psid) {
-    let user = await getUserInfo(sender_psid)
+    let userInfo = await getUserInfo(sender_psid)
+    saveUserInfo(sender_psid)
 
-    sendGreeting(sender_psid, user)
+    sendGreeting(sender_psid, userInfo)
     showMainMenu(sender_psid)
 }
 
@@ -24,6 +27,14 @@ async function getUserInfo(sender_psid) {
     }
 
     return result.data
+}
+
+async function saveUserInfo(sender_psid) {
+    try {
+        await User.create({ psid: sender_psid, meme_counter: 5 })
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 function sendGreeting(sender_psid, user) {

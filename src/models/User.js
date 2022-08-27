@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const UserSchema = new Schema(
     {
         psid: { type: String, unique: true },
-        remaining_memes: Number,
+        meme_counter: Number,
     },
     { timestamps: true },
 )
