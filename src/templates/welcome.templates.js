@@ -1,4 +1,4 @@
-function WelcomeMenuTeWelcomeMenuTemplatemplate() {
+function WelcomeMenuTemplate() {
     return {
         attachment: {
             type: 'template',
