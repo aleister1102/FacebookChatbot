@@ -30,7 +30,7 @@ async function generateEventTemplate() {
             {
                 type: 'postback',
                 title: 'Xem thông tin',
-                payload: `EVENT_${event._id.$oid}`,
+                payload: `EVENT_${event._id}`,
             },
         ],
     }))
