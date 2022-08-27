@@ -54,6 +54,6 @@ async function showEventDetails(sender_psid, event_id) {
 }
 
 module.exports = {
-    showEventList: showEventList,
-    showEventDetails: showEventDetails,
+    showEventList,
+    showEventDetails
 }

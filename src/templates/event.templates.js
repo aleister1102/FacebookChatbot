@@ -46,6 +46,6 @@ function eventTemplate(event) {
 }
 
 module.exports = {
-    eventListTemplate: eventListTemplate,
-    eventTemplate: eventTemplate,
+    eventListTemplate,
+    eventTemplate,
 }
