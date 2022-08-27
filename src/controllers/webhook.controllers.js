@@ -106,6 +106,10 @@ async function handlePostback(sender_psid, received_postback) {
             })
         }
     }
+
+    if (payload.includes('EVENT_')) {
+        handlers.showEventDetails(sender_psid, payload.split('_')[1])
+    }
 }
 
 module.exports = {

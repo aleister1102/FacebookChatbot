@@ -1,33 +1,14 @@
-const findCurrentEvents = require('../utils/findCurrentEvents')
-
 const eventImage =
     'https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
 
-async function generateEventTemplate() {
-    const events = await findCurrentEvents()
-
-    return events.map((event) => ({
-        title: `${event.name} ${event.semester}`,
-        subtitle: `Năm học ${event.year}`,
-        image_url: eventImage,
-        buttons: [
-            {
-                type: 'postback',
-                title: 'Xem thông tin',
-                payload: `EVENT_${event._id}`,
-            },
-        ],
-    }))
-}
-
-async function eventListTemplate() {
+async function eventListTemplate(eventList) {
     return {
         attachment: {
             type: 'template',
             payload: {
                 template_type: 'generic',
                 elements: [
-                    ...(await generateEventTemplate()),
+                    ...eventList,
                     {
                         title: `Trở về`,
                         image_url: eventImage,
@@ -45,4 +26,26 @@ async function eventListTemplate() {
     }
 }
 
-module.exports = { eventListTemplate: eventListTemplate }
+function eventTemplate(event) {
+    return {
+        attachment: {
+            type: 'template',
+            payload: {
+                template_type: 'generic',
+                elements: [
+                    {
+                        title: `${event.name}`,
+                        subtitle: `Thời gian: ${event.time}\n
+                        Địa điểm: ${event.location}
+                        `,
+                    },
+                ],
+            },
+        },
+    }
+}
+
+module.exports = {
+    eventListTemplate: eventListTemplate,
+    eventTemplate: eventTemplate,
+}

@@ -1,0 +1,16 @@
+// MongoDB Playground
+// Use Ctrl+Space inside a snippet or a string literal to trigger completions.
+
+const database = 'chatbot';
+const collection = 'NEW_COLLECTION_NAME';
+
+// The current database to use.
+use(database);
+
+db.events.insertOne({
+  name: "Tên lửa nước",
+  semester: "1",
+  year: "2022-2023",
+  time:"",
+  location:"",
+})

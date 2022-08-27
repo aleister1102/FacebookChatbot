@@ -1,5 +1,5 @@
 const { handleGetStarted, showMainMenu } = require('./get-started.handlers')
-const { showEventMenu } = require('./event.handlers')
+const { showEventMenu, showEventDetails } = require('./event.handlers')
 const {
     showMaterialMenu,
     handleMaterialRequest,
