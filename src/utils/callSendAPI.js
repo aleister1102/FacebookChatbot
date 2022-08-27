@@ -22,7 +22,9 @@ function callSendAPI(sender_psid, response) {
         data: request_body,
     })
         .then(() => console.log('Message sent!'))
-        .catch((error) => console.log('Unable to send message: ' + error))
+        .catch((error) =>
+            console.log('Unable to send message: ' + error.response.data),
+        )
 }
 
 module.exports = callSendAPI
