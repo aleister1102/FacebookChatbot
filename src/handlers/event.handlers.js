@@ -39,9 +39,10 @@ async function showEventDetails(sender_psid, event_id) {
     try {
         const event = await Event.findById(event_id)
 
-        const eventTemplate = templates.eventTemplate(event)
-        console.log(JSON.stringify(eventTemplate, null, 4))
-        callSendAPI(sender_psid, eventTemplate)
+        const eventDetails = {
+            text: `Tên hoạt động: ${event.name}\nThời gian: ${event.time}\nĐịa điểm: ${event.location}}`,
+        }
+        callSendAPI(sender_psid, eventDetails)
     } catch (e) {
         console.log(e)
     }

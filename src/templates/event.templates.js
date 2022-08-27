@@ -28,26 +28,4 @@ function eventListTemplate(eventList) {
     }
 }
 
-function eventTemplate(event) {
-    return {
-        attachment: {
-            type: 'template',
-            payload: {
-                template_type: 'generic',
-                elements: [
-                    {
-                        title: `${event.name}`,
-                        subtitle: `Thời gian: ${event.time}\nĐịa điểm: ${event.location}
-                        `,
-                        image_url: studyImage,
-                    },
-                ],
-            },
-        },
-    }
-}
-
-module.exports = {
-    eventListTemplate,
-    eventTemplate,
-}
+module.exports = { eventListTemplate }
