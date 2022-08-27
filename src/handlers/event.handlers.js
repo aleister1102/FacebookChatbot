@@ -11,8 +11,7 @@ async function showEventList(sender_psid) {
     try {
         const events = await Event.find({})
 
-        let eventListTemplate = generateEventListTemplate(events)
-        console.log(JSON.stringify(eventListTemplate, null, 4))
+        const eventListTemplate = generateEventListTemplate(events)
         callSendAPI(sender_psid, eventListTemplate)
     } catch (e) {
         console.log(e)
@@ -37,13 +36,11 @@ function generateEventListTemplate(events) {
 }
 
 async function showEventDetails(sender_psid, event_id) {
-    let event
-
     try {
-        event = await Event.find({ _id: event_id })
-        console.log('Found event based on payload: ', event)
+        const event = await Event.findById(event_id)
 
-        let eventTemplate = templates.eventTemplate(event)
+        const eventTemplate = templates.eventTemplate(event)
+        console.log(JSON.stringify(eventTemplate, null, 4))
         callSendAPI(sender_psid, eventTemplate)
     } catch (e) {
         console.log(e)
