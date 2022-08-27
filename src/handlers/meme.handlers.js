@@ -33,6 +33,7 @@ async function handleMemeRequest(sender_psid) {
         })
 
         let user = await User.findOne({ psid: sender_psid })
+        console.log(user);
 
         if (user) {
             if (user.remaining_memes > 0) {
@@ -44,6 +45,7 @@ async function handleMemeRequest(sender_psid) {
             }
         } else {
             saveUser(sender_psid)
+            decrementMemeCounter(sender_psid)
         }
     } catch (e) {
         console.log(e)
