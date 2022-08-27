@@ -2,6 +2,8 @@ const callSendAPI = require('../utils/callSendAPI')
 
 const { templates } = require('../templates/')
 
+const Event = require('../models/event')
+
 const eventImage =
     'https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
 
