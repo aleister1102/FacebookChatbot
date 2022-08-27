@@ -1,5 +1,5 @@
-const webhookRouter = require('../features/webhook/webhook.routes')
-const siteRouter = require('../features/site/site.routes')
+const webhookRouter = require('./webhook.routes')
+const siteRouter = require('./site.routes')
 
 function configRoutes(app) {
     app.use('/', siteRouter)

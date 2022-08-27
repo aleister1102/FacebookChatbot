@@ -1,7 +1,7 @@
 const axios = require('axios')
 const {
     toLowerCaseNonAccentVietnamese,
-} = require('../../utils/nonAccentVietnamese')
+} = require('../utils/nonAccentVietnamese')
 
 let isRequestingMaterial = false
 let requestingSubject = ''
@@ -99,7 +99,7 @@ function handleMessage(sender_psid, received_message) {
     }
 }
 
-const { templates } = require('./webhook.templates')
+const { templates } = require('../templates/templates')
 
 // Handles messaging_postbacks events
 async function handlePostback(sender_psid, received_postback) {
@@ -355,4 +355,9 @@ function callSendAPI(sender_psid, response) {
         .catch((error) => console.log('Unable to send message: ' + error))
 }
 
-module.exports = { getWebhook: getWebhook, postWebhook: postWebhook }
+module.exports = {
+    webhookController: {
+        getWebhook,
+        postWebhook,
+    },
+}
