@@ -3,12 +3,17 @@ const database = 'chatbot';
 // The current database to use.
 use(database);
 
+// Save user
 // db.users.insertOne({_id: 1, memes: 5})
 
-// decrement after viewing a meme
-db.users.updateOne({_id: 1}, {$inc: {memes: -1}})
+// Decrement after viewing a meme
+// db.users.updateOne({_id: 1}, {$inc: {memes: -1}})
 
-// reset counter after one day
-db.users.updateOne({_id: 1}, {$set: {memes: 5}})
+// Reset counter after one day
+// db.users.updateOne({_id: 1}, {$set: {memes: 5}})
+
+// Delete users
+// db.users.deleteMany({})
 
 db.users.find({})
+
