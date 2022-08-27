@@ -8,15 +8,15 @@ const templates = { ...require('../templates/meme.templates') }
 
 async function saveUser(sender_psid) {
     try {
-        await User.create({ _id: sender_psid, memes: 5 })
+        await User.create({ psid: sender_psid, memes: 5 })
     } catch (e) {
         console.log(e)
     }
 }
 
-async function decrementMemeCounter(sender_psid){
-    try{
-        await User.updateOne({_id: sender_psid}, {$inc: {memes: -1}})
+async function decrementMemeCounter(sender_psid) {
+    try {
+        await User.updateOne({ psid: sender_psid }, { $inc: { memes: -1 } })
     } catch (e) {
         console.log(e)
     }
