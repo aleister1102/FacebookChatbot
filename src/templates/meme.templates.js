@@ -1,4 +1,4 @@
-function memeTemplate(meme_url) {
+function MemeTemplate(meme_url) {
     return {
         attachment: {
             type: 'image',
@@ -10,7 +10,7 @@ function memeTemplate(meme_url) {
     }
 }
 
-function memeButtonsTemplate() {
+function MemeButtonsTemplate() {
     return {
         attachment: {
             type: 'template',
@@ -38,4 +38,4 @@ function memeButtonsTemplate() {
     }
 }
 
-module.exports = { memeTemplate, memeButtonsTemplate }
+module.exports = { MemeTemplate, MemeButtonsTemplate }

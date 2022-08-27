@@ -2,7 +2,7 @@ const axios = require('axios')
 
 const callSendAPI = require('../utils/callSendAPI')
 
-const { templates } = require('../templates/')
+const templates = { ...require('../templates/get-started.templates') }
 
 async function handleGetStarted(sender_psid) {
     let user = await getUserInfo(sender_psid)
@@ -34,7 +34,7 @@ function sendGreeting(sender_psid, user) {
 }
 
 function showMainMenu(sender_psid) {
-    let mainMenu = templates.mainMenuTemplate()
+    let mainMenu = templates.MainMenuTemplate()
     callSendAPI(sender_psid, mainMenu)
 }
 

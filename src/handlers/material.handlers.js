@@ -4,7 +4,7 @@ const {
     toLowerCaseNonAccentVietnamese,
 } = require('../utils/nonAccentVietnamese')
 
-const { templates } = require('../templates/')
+const templates = { ...require('../templates/material.templates') }
 
 let isRequestingMaterial = false
 let requestingSubject = ''
@@ -26,7 +26,7 @@ const mathSubjects = [
 ]
 
 function showMaterialMenu(sender_psid) {
-    let materialMenu = templates.materialMenuTemplate()
+    let materialMenu = templates.MaterialMenuTemplate()
     callSendAPI(sender_psid, materialMenu)
 }
 
@@ -70,7 +70,7 @@ function showSubjects(sender_psid, receivedName) {
     }
 
     if (foundSubjects) {
-        response = templates.subjectTemplate(foundSubjects)
+        response = templates.SubjectTemplate(foundSubjects)
     } else {
         response = { text: 'Rất tiếc, bot không tìm thấy môn học đó 😔' }
     }
@@ -92,12 +92,12 @@ function matchSubject(subject, receivedName) {
 }
 
 function sendMaterial(sender_psid, subject) {
-    let response = templates.materialTemplate(subject)
+    let response = templates.MaterialTemplate(subject)
     callSendAPI(sender_psid, response)
 }
 
 function showMaterialButtons(sender_psid) {
-    let response = templates.materialButtonsTemplate()
+    let response = templates.MaterialButtonsTemplate()
     callSendAPI(sender_psid, response)
 }
 

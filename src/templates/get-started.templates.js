@@ -1,4 +1,4 @@
-function mainMenuTemplate() {
+function MainMenuTemplate() {
     return {
         attachment: {
             type: 'template',
@@ -35,4 +35,4 @@ function mainMenuTemplate() {
     }
 }
 
-module.exports = { mainMenuTemplate }
+module.exports = { MainMenuTemplate }

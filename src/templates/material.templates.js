@@ -1,4 +1,4 @@
-function materialMenuTemplate() {
+function MaterialMenuTemplate() {
     return {
         attachment: {
             type: 'template',
@@ -44,7 +44,7 @@ function materialMenuTemplate() {
     }
 }
 
-function subjectTemplate(subjects) {
+function SubjectTemplate(subjects) {
     return {
         text: 'Đây là các môn học mà bot đã tìm thấy 🤗: ',
         quick_replies: subjects.map((subject) => ({
@@ -55,11 +55,11 @@ function subjectTemplate(subjects) {
     }
 }
 
-function materialTemplate(subject) {
+function MaterialTemplate(subject) {
     return { text: `Đây là các tài liệu về ${subject} mà bạn cần: ` }
 }
 
-function materialButtonsTemplate() {
+function MaterialButtonsTemplate() {
     return {
         attachment: {
             type: 'template',
@@ -88,8 +88,8 @@ function materialButtonsTemplate() {
 }
 
 module.exports = {
-    materialMenuTemplate,
-    subjectTemplate,
-    materialTemplate,
-    materialButtonsTemplate,
+    SubjectTemplate,
+    MaterialMenuTemplate,
+    MaterialTemplate,
+    MaterialButtonsTemplate,
 }

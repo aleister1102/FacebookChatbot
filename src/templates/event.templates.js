@@ -1,7 +1,7 @@
 const eventImage =
     'https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
 
-function eventListTemplate(eventList) {
+function EventListTemplate(eventList) {
     return {
         attachment: {
             type: 'template',
@@ -26,7 +26,7 @@ function eventListTemplate(eventList) {
     }
 }
 
-function eventDetailsTemplate(event) {
+function EventDetailsTemplate(event) {
     return {
         attachment: {
             type: 'template',
@@ -43,4 +43,4 @@ function eventDetailsTemplate(event) {
     }
 }
 
-module.exports = { eventListTemplate, eventDetailsTemplate }
+module.exports = { EventListTemplate, EventDetailsTemplate }

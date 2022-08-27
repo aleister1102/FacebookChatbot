@@ -1,4 +1,9 @@
-const { handlers } = require('../handlers/')
+const handlers = {
+    ...require('../handlers/get-started.handlers'),
+    ...require('../handlers/event.handlers'),
+    ...require('../handlers/material.handlers'),
+    ...require('../handlers/meme.handlers'),
+}
 
 function getWebhook(req, res) {
     // Parse the query params

@@ -2,7 +2,7 @@ const axios = require('axios')
 
 const callSendAPI = require('../utils/callSendAPI')
 
-const { templates } = require('../templates/')
+const templates = { ...require('../templates/meme.templates') }
 
 async function handleMemeRequest(sender_psid) {
     try {
@@ -20,12 +20,12 @@ async function handleMemeRequest(sender_psid) {
 }
 
 function sendMeme(sender_psid, meme_url) {
-    let meme = templates.memeTemplate(meme_url)
+    let meme = templates.MemeTemplate(meme_url)
     callSendAPI(sender_psid, meme)
 }
 
 function showMemeButtons(sender_psid) {
-    let memeButtons = templates.memeButtonsTemplate()
+    let memeButtons = templates.MemeButtonsTemplate()
     callSendAPI(sender_psid, memeButtons)
 }
 
