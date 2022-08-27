@@ -41,7 +41,7 @@ async function showEventMenu(sender_psid) {
     callSendAPI(sender_psid, eventListTemplate)
 }
 
-function showEventDetails(sender_psid, event_id) {
+async function showEventDetails(sender_psid, event_id) {
     let event = await findEvent(event_id)
     let eventTemplate = templates.eventTemplate(event)
 
