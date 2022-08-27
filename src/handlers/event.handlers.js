@@ -7,11 +7,14 @@ const Event = require('../models/Event')
 const eventImage =
     'https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
 
-async function findCurrentEvents() {
+async function showEventList(sender_psid) {
     let events
 
     try {
         events = await Event.find({})
+
+        let eventListTemplate = generateEventListTemplate(events)
+        callSendAPI(sender_psid, eventListTemplate)
     } catch (e) {
         console.log(e)
     }
@@ -19,9 +22,7 @@ async function findCurrentEvents() {
     return events
 }
 
-async function generateEventTemplate() {
-    const events = await findCurrentEvents()
-
+function generateEventListTemplate(events) {
     return events.map((event) => ({
         title: `${event.name} ${event.semester}`,
         subtitle: `Năm học ${event.year}`,
@@ -36,26 +37,15 @@ async function generateEventTemplate() {
     }))
 }
 
-async function showEventList(sender_psid) {
-    let eventList = await generateEventTemplate()
-    let eventListTemplate = await templates.eventListTemplate(eventList)
-
-    callSendAPI(sender_psid, eventListTemplate)
-}
-
-async function showEventDetails(sender_psid, event_id) {
-    let event = await findEvent(event_id)
-    let eventTemplate = templates.eventTemplate(event)
-
-    callSendAPI(sender_psid, eventTemplate)
-}
-
-async function findEvent(event_id) {
+async function showEventDetails(event_id) {
     let event
 
     try {
         event = await Event.find({ _id: event_id })
         console.log('Found event based on payload: ', event)
+
+        let eventTemplate = templates.eventTemplate(event)
+        callSendAPI(sender_psid, eventTemplate)
     } catch (e) {
         console.log(e)
     }
@@ -63,4 +53,7 @@ async function findEvent(event_id) {
     return event
 }
 
-module.exports = { showEventList: showEventList, showEventDetails }
+module.exports = {
+    showEventList: showEventList,
+    showEventDetails: showEventDetails,
+}

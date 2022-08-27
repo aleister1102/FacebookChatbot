@@ -101,9 +101,7 @@ async function handlePostback(sender_psid, received_postback) {
             break
         }
         default: {
-            callSendAPI(sender_psid, {
-                text: 'Rất tiếc, bot không thể xử lý yêu cầu này 😢',
-            })
+            break
         }
     }
 
