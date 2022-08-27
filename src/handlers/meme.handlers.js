@@ -8,7 +8,7 @@ const templates = { ...require('../templates/meme.templates') }
 
 async function saveUser(sender_psid) {
     try {
-        await User.create({ psid: sender_psid, memes: 5 })
+        await User.create({ _id: sender_psid, memes: 5 })
     } catch (e) {
         console.log(e)
     }
