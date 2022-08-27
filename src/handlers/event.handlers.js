@@ -36,7 +36,7 @@ function generateEventListTemplate(events) {
         ],
     }))
 
-    return eventListTemplate(eventsList)
+    return templates.eventListTemplate(eventsList)
 }
 
 async function showEventDetails(sender_psid, event_id) {
