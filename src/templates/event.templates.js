@@ -1,7 +1,7 @@
 const eventImage =
     'https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
 
-async function eventListTemplate(eventList) {
+function eventListTemplate(eventList) {
     return {
         attachment: {
             type: 'template',
