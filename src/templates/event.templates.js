@@ -35,8 +35,7 @@ function eventTemplate(event) {
                 elements: [
                     {
                         title: `${event.name}`,
-                        subtitle: `Thời gian: ${event.time}\n
-                        Địa điểm: ${event.location}
+                        subtitle: `Thời gian: ${event.time}\nĐịa điểm: ${event.location}
                         `,
                     },
                 ],
