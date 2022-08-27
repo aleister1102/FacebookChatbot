@@ -7,6 +7,17 @@ const User = require('../models/User')
 
 const templates = { ...require('../templates/meme.templates') }
 
+async function updateTimeStamp(sender_psid) {
+    try {
+        await User.updateOne(
+            { psid: sender_psid },
+            { $set: { updatedAt: Date.now() } },
+        )
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 async function decrementMemeCounter(sender_psid) {
     try {
         await User.updateOne(
@@ -56,7 +67,9 @@ async function handleMemeRequest(sender_psid) {
 function sendMeme(sender_psid, meme_url) {
     let meme = templates.MemeTemplate(meme_url)
     callSendAPI(sender_psid, meme)
+    
     decrementMemeCounter(sender_psid)
+    updateTimeStamp(sender_psid)
 }
 
 function showMemeButtons(sender_psid) {

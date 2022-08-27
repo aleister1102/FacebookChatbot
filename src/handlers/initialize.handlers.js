@@ -6,6 +6,8 @@ const User = require('../models/User')
 
 const templates = { ...require('../templates/initialize.templates') }
 
+const MEME_LIMITATION = 5
+
 async function handleGetStarted(sender_psid) {
     let userInfo = await getUserInfo(sender_psid)
     saveUserInfo(sender_psid)
@@ -31,7 +33,7 @@ async function getUserInfo(sender_psid) {
 
 async function saveUserInfo(sender_psid) {
     try {
-        await User.create({ psid: sender_psid, meme_counter: 5 })
+        await User.create({ psid: sender_psid, meme_counter: MEME_LIMITATION })
     } catch (e) {
         console.log(e)
     }
