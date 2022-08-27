@@ -29,11 +29,6 @@ function setupProfile() {
                 // add about page
                 call_to_actions: [
                     {
-                        type: 'postback',
-                        title: 'Menu chính',
-                        payload: 'MAIN_MENU',
-                    },
-                    {
                         type: 'web_url',
                         title: 'Truy cập fanpage',
                         url: FANPAGE_URL,
@@ -42,6 +37,11 @@ function setupProfile() {
                         type: 'web_url',
                         title: 'Tài liệu tổng hợp',
                         url: MATERIAL_URL,
+                    },
+                    {
+                        type: 'postback',
+                        title: 'Menu chính',
+                        payload: 'MAIN_MENU',
                     },
                 ],
             },

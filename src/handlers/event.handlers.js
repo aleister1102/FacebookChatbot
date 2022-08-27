@@ -8,18 +8,15 @@ const eventImage =
     'https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
 
 async function showEventList(sender_psid) {
-    let events
-
     try {
-        events = await Event.find({})
+        const events = await Event.find({})
 
         let eventListTemplate = generateEventListTemplate(events)
+        console.log(JSON.stringify(eventListTemplate, null, 4))
         callSendAPI(sender_psid, eventListTemplate)
     } catch (e) {
         console.log(e)
     }
-
-    return events
 }
 
 function generateEventListTemplate(events) {
