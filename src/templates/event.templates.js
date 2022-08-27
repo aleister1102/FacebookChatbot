@@ -1,7 +1,5 @@
 const eventImage =
     'https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
-const studyImage =
-    'https://images.pexels.com/photos/4778611/pexels-photo-4778611.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
 
 function eventListTemplate(eventList) {
     return {
@@ -28,4 +26,21 @@ function eventListTemplate(eventList) {
     }
 }
 
-module.exports = { eventListTemplate }
+function eventDetailsTemplate(event) {
+    return {
+        attachment: {
+            type: 'template',
+            payload: {
+                template_type: 'generic',
+                elements: [
+                    {
+                        title: `${event.name} ${event.semester}`,
+                        subtitle: `Năm học: ${event.year}\nThời gian: ${event.time}\nĐịa điểm: ${event.location}`,
+                    },
+                ],
+            },
+        },
+    }
+}
+
+module.exports = { eventListTemplate, eventDetailsTemplate }
