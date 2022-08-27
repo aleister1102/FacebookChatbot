@@ -23,7 +23,10 @@ function callSendAPI(sender_psid, response) {
     })
         .then(() => console.log('Message sent!'))
         .catch((error) =>
-            console.log('Unable to send message: ' + error.response.data),
+            console.log(
+                'Unable to send message: ' +
+                    JSON.stringify(error.response.data),
+            ),
         )
 }
 

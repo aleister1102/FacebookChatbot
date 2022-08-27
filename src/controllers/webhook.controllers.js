@@ -1,7 +1,5 @@
 const { handlers } = require('../handlers/')
 
-const callSendAPI = require('../utils/callSendAPI')
-
 function getWebhook(req, res) {
     // Parse the query params
     let mode = req.query['hub.mode']
