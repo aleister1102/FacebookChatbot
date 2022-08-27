@@ -7,6 +7,8 @@ const User = require('../models/User')
 
 const templates = { ...require('../templates/meme.templates') }
 
+const MEME_LIMITATION = 5
+
 async function updateTimeStamp(sender_psid) {
     try {
         await User.updateOne(
@@ -33,7 +35,7 @@ async function resetMemeCounter(sender_psid) {
     try {
         await User.updateOne(
             { psid: sender_psid },
-            { $set: { meme_counter: 5 } },
+            { $set: { meme_counter: MEME_LIMITATION } },
         )
     } catch (e) {
         console.log(e)
@@ -48,9 +50,11 @@ async function handleMemeRequest(sender_psid) {
         })
 
         let user = await User.findOne({ psid: sender_psid })
-        
+
         if (hoursDiff(user.updatedAt, Date.now()) >= 24) {
-            await resetMemeCounter(sender_psid)
+            resetMemeCounter(sender_psid)
+            sendMeme(sender_psid, result.data.preview.pop())
+            showMemeButtons(sender_psid)
         }
 
         if (user.meme_counter > 0) {
@@ -67,7 +71,7 @@ async function handleMemeRequest(sender_psid) {
 function sendMeme(sender_psid, meme_url) {
     let meme = templates.MemeTemplate(meme_url)
     callSendAPI(sender_psid, meme)
-    
+
     decrementMemeCounter(sender_psid)
     updateTimeStamp(sender_psid)
 }
