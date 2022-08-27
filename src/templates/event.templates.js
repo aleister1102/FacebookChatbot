@@ -8,7 +8,7 @@ async function eventListTemplate(eventList) {
             payload: {
                 template_type: 'generic',
                 elements: [
-                    ...eventList,
+                    // ...eventList,
                     {
                         title: `Trở về`,
                         image_url: eventImage,

@@ -14,7 +14,6 @@ async function showEventList(sender_psid) {
         events = await Event.find({})
 
         let eventListTemplate = generateEventListTemplate(events)
-        console.log(JSON.stringify(eventListTemplate));
         callSendAPI(sender_psid, eventListTemplate)
     } catch (e) {
         console.log(e)
