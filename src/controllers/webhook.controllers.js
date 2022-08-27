@@ -4,6 +4,7 @@ const handlers = {
     ...require('../handlers/welcome.handlers'),
     ...require('../handlers/event.handlers'),
     ...require('../handlers/meme.handlers'),
+    ...require('../handlers/video.handlers'),
 }
 
 function getWebhook(req, res) {
