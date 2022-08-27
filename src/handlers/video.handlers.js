@@ -2,8 +2,9 @@ const callSendAPI = require('../utils/callSendAPI')
 
 const templates = { ...require('../templates/video.templates') }
 
+// smaller than 25MB
 const representationVideo =
-    'https://drive.google.com/file/d/1DGbMPI-i9hNfB951WgTJnBGyDfwPcqJo/view'
+    'https://www.youtube.com/watch?v=I10XB1-IIbA'
 
 function handleVideoRequest(sender_psid) {
     let video = templates.VideoTemplate(representationVideo)
