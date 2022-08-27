@@ -2,7 +2,17 @@ const axios = require('axios')
 
 const callSendAPI = require('../utils/callSendAPI')
 
+const User = require('../models/User')
+
 const templates = { ...require('../templates/meme.templates') }
+
+async function saveUser(sender_psid) {
+    try {
+        await User.create({ psid: sender_psid, memes: 5 })
+    } catch (e) {
+        console.log(JSON.stringify(e.response.data, null, 4))
+    }
+}
 
 async function handleMemeRequest(sender_psid) {
     try {
@@ -12,6 +22,7 @@ async function handleMemeRequest(sender_psid) {
         })
         console.log('Get meme', ' - Succeed!')
 
+        saveUser(sender_psid)
         sendMeme(sender_psid, result.data.preview.pop())
         showMemeButtons(sender_psid)
     } catch (e) {

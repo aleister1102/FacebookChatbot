@@ -31,7 +31,9 @@ function EventDetailsTemplate(event) {
                 elements: [
                     {
                         title: `${event.name} ${event.semester}`,
-                        subtitle: `Năm học: ${event.year}\nThời gian: ${event.time}\nĐịa điểm: ${event.location}`,
+                        subtitle: `Năm học: ${event.year}\nThời gian: ${
+                            event.time || ''
+                        }\nĐịa điểm: ${event.location}`,
                     },
                 ],
             },
