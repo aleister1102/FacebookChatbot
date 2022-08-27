@@ -1,8 +1,12 @@
 require('dotenv').config()
-const { engine } = require('express-handlebars')
-const express = require('express')
+
 const morgan = require('morgan')
+const express = require('express')
 const path = require('path')
+
+const { engine } = require('express-handlebars')
+
+const mongoose = require('mongoose')
 
 function configMiddlewares(app) {
     // HTTP logger
@@ -26,4 +30,16 @@ function configViewEngine(app) {
     app.set('views', path.join(__dirname, '..', 'views'))
 }
 
-module.exports = { configMiddlewares, configViewEngine }
+async function connectToDatabase() {
+    try {
+        await mongoose.connect(process.env.DATABASE_CONNECTION_STRING, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        })
+        console.log('Connect successfully!')
+    } catch (error) {
+        console.log(`Connect failed: ${error}!!!`)
+    }
+}
+
+module.exports = { configMiddlewares, configViewEngine, connectToDatabase }

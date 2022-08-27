@@ -2,8 +2,8 @@ const callSendAPI = require('../utils/callSendAPI')
 
 const { templates } = require('../templates/')
 
-function showEventMenu(sender_psid) {
-    let eventMenu = templates.eventMenuTemplate()
+async function showEventMenu(sender_psid) {
+    let eventMenu = await templates.eventMenuTemplate()
     callSendAPI(sender_psid, eventMenu)
 }
 

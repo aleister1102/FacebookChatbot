@@ -1,7 +1,11 @@
 const express = require('express')
 const app = express()
 
-const { configMiddlewares, configViewEngine } = require('./config/')
+const {
+    configMiddlewares,
+    configViewEngine,
+    connectToDatabase,
+} = require('./config/')
 const { configRoutes } = require('./routes/')
 const { setupProfile } = require('./config/setup')
 
@@ -12,6 +16,11 @@ app.listen(port, () => {
 })
 
 configMiddlewares(app)
+
 configViewEngine(app)
+
 configRoutes(app)
+
+connectToDatabase()
+
 setupProfile()

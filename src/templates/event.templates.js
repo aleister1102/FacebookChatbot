@@ -1,62 +1,48 @@
-function eventMenuTemplate() {
+const Event = require('../models/Event')
+
+const eventImage =
+    'https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+
+async function findCurrentEvents() {
+    let events
+
+    try {
+        events = await Event.find({})
+    } catch (e) {
+        console.log(e)
+    }
+
+    return events
+}
+
+async function generateEventTemplate() {
+    const events = await findCurrentEvents()
+
+    return events.map((event) => ({
+        title: `${event.name} ${event.semester}`,
+        subtitle: `Năm học ${event.year}`,
+        image_url: eventImage,
+        buttons: [
+            {
+                type: 'postback',
+                title: 'Xem thông tin',
+                payload: `EVENT_${event.id}`,
+            },
+        ],
+    }))
+}
+
+async function eventMenuTemplate() {
     return {
         attachment: {
             type: 'template',
             payload: {
                 template_type: 'generic',
-                // get from database
                 elements: [
-                    {
-                        title: `Ôn thi giữa kỳ 1`,
-                        subtitle: `Năm học 2022-2023`,
-                        image_url: `https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-                        buttons: [
-                            {
-                                type: 'postback',
-                                title: 'Xem thông tin',
-                                payload: `EVENT_2`,
-                            },
-                        ],
-                    },
-                    {
-                        title: `Ôn thi cuối kỳ 1`,
-                        subtitle: `Năm học 2022-2023`,
-                        image_url: `https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-                        buttons: [
-                            {
-                                type: 'postback',
-                                title: 'Xem thông tin',
-                                payload: `EVENT_2`,
-                            },
-                        ],
-                    },
-                    {
-                        title: `Ôn thi giữa kỳ 2`,
-                        subtitle: `Năm học 2022-2023`,
-                        image_url: `https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-                        buttons: [
-                            {
-                                type: 'postback',
-                                title: 'Xem thông tin',
-                                payload: `EVENT_3`,
-                            },
-                        ],
-                    },
-                    {
-                        title: `Ôn thi cuối kỳ 2`,
-                        subtitle: `Năm học 2022-2023`,
-                        image_url: `https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-                        buttons: [
-                            {
-                                type: 'postback',
-                                title: 'Xem thông tin',
-                                payload: `EVENT_4`,
-                            },
-                        ],
-                    },
+                    ...(await generateEventTemplate()),
                     {
                         title: `Trở về`,
-                        image_url: `https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
+                        image_url: eventImage,
                         buttons: [
                             {
                                 type: 'postback',
