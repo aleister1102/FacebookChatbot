@@ -21,4 +21,4 @@ const EventSchema = new Schema(
 
 EventSchema.plugin(AutoIncrement)
 
-module.exports = mongoose.model('Event', EventSchema)
+module.exports = mongoose.model('Event', EventSchema, 'events')
