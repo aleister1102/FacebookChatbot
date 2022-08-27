@@ -205,6 +205,7 @@ function matchSubject(subject, receivedName) {
     subject = toLowerCaseNonAccentVietnamese(subject)
     receivedName = toLowerCaseNonAccentVietnamese(receivedName)
 
+    // equal compare instead of includes
     return receivedName.split(' ').find((word) => subject.includes(word))
 }
 

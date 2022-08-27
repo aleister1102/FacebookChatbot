@@ -1,10 +1,12 @@
 const express = require('express')
 const siteRouter = express.Router()
 
-const siteController = require('./site.controllers')
+const { siteController } = require('./site.controllers')
 
 siteRouter.get('/', siteController.getHomePage)
-siteRouter.get('/event', siteController.getEventPage)
-siteRouter.get('/material', siteController.getMaterialPage)
+siteRouter.get('/event/list', siteController.getEventPage)
+siteRouter.get('/event/add', siteController.getAddEventPage)
+siteRouter.get('/material/list', siteController.getMaterialPage)
+siteRouter.get('/material/add', siteController.getAddMaterialPage)
 
 module.exports = siteRouter

@@ -3,15 +3,27 @@ function getHomePage(req, res) {
 }
 
 function getEventPage(req, res) {
-    res.render('event')
+    res.render('event/event-list')
+}
+
+function getAddEventPage(req, res) {
+    res.render('event/event-add')
 }
 
 function getMaterialPage(req, res) {
-    res.render('material')
+    res.render('material/material-list')
+}
+
+function getAddMaterialPage(req, res) {
+    res.render('material/material-add')
 }
 
 module.exports = {
-    getHomePage: getHomePage,
-    getEventPage: getEventPage,
-    getMaterialPage: getMaterialPage,
+    siteController: {
+        getHomePage,
+        getEventPage,
+        getAddEventPage,
+        getMaterialPage,
+        getAddMaterialPage,
+    },
 }
