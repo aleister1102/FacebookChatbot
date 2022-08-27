@@ -81,7 +81,7 @@ async function handlePostback(sender_psid, received_postback) {
             break
         }
         case 'EVENT': {
-            handlers.showEventMenu(sender_psid)
+            handlers.showEventList(sender_psid)
             break
         }
         case 'MATERIAL': {

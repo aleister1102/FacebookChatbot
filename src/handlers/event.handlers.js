@@ -36,7 +36,7 @@ async function generateEventTemplate() {
     }))
 }
 
-async function showEventMenu(sender_psid) {
+async function showEventList(sender_psid) {
     let eventList = await generateEventTemplate()
     let eventListTemplate = await templates.eventListTemplate(eventList)
 
@@ -63,4 +63,4 @@ async function findEvent(event_id) {
     return event
 }
 
-module.exports = { showEventMenu, showEventDetails }
+module.exports = { showEventList: showEventList, showEventDetails }

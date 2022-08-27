@@ -1,5 +1,5 @@
 const { handleGetStarted, showMainMenu } = require('./get-started.handlers')
-const { showEventMenu, showEventDetails } = require('./event.handlers')
+const { showEventList, showEventDetails } = require('./event.handlers')
 const {
     showMaterialMenu,
     handleMaterialRequest,
@@ -11,7 +11,8 @@ module.exports = {
     handlers: {
         handleGetStarted,
         showMainMenu,
-        showEventMenu,
+        showEventList,
+        showEventDetails,
         showMaterialMenu,
         handleMaterialRequest,
         handleSubjectResponse,
