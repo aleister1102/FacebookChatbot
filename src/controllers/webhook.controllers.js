@@ -74,6 +74,10 @@ async function handlePostback(sender_psid, received_postback) {
     // Get the payload for the postback
     let payload = received_postback.payload
 
+    if (payload.includes('EVENT_')) {
+        handlers.showEventDetails(sender_psid, payload.split('_')[1])
+    }
+
     // Set the response based on the postback payload
     switch (payload) {
         case 'GET_STARTED': {
@@ -97,16 +101,11 @@ async function handlePostback(sender_psid, received_postback) {
             break
         }
         default: {
+            callSendAPI(sender_psid, {
+                text: 'Rất tiếc, bot không thể xử lý yêu cầu này 😢',
+            })
             break
         }
-    }
-
-    if (payload.includes('EVENT_')) {
-        handlers.showEventDetails(sender_psid, payload.split('_')[1])
-    } else {
-        callSendAPI(sender_psid, {
-            text: 'Rất tiếc, bot không thể xử lý yêu cầu này 😢',
-        })
     }
 }
 
