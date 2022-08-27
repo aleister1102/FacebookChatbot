@@ -23,7 +23,7 @@ async function showEventList(sender_psid) {
 }
 
 function generateEventListTemplate(events) {
-    return events.map((event) => ({
+    const eventsList = events.map((event) => ({
         title: `${event.name} ${event.semester}`,
         subtitle: `Năm học ${event.year}`,
         image_url: eventImage,
@@ -35,6 +35,8 @@ function generateEventListTemplate(events) {
             },
         ],
     }))
+
+    return eventListTemplate(eventsList)
 }
 
 async function showEventDetails(sender_psid, event_id) {
@@ -55,5 +57,5 @@ async function showEventDetails(sender_psid, event_id) {
 
 module.exports = {
     showEventList,
-    showEventDetails
+    showEventDetails,
 }
