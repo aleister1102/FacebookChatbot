@@ -37,7 +37,7 @@ function generateEventListTemplate(events) {
     }))
 }
 
-async function showEventDetails(event_id) {
+async function showEventDetails(sender_psid, event_id) {
     let event
 
     try {
