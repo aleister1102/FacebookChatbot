@@ -1,5 +1,5 @@
 const { mainMenuTemplate } = require('./main.templates')
-const { eventMenuTemplate } = require('./event.templates')
+const { eventListTemplate } = require('./event.templates')
 const {
     materialMenuTemplate,
     subjectTemplate,
@@ -12,7 +12,7 @@ module.exports = {
     templates: {
         mainMenuTemplate,
 
-        eventMenuTemplate,
+        eventListTemplate,
 
         materialMenuTemplate,
         subjectTemplate,

@@ -1,19 +1,7 @@
-const Event = require('../models/Event')
+const findCurrentEvents = require('../utils/findCurrentEvents')
 
 const eventImage =
     'https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
-
-async function findCurrentEvents() {
-    let events
-
-    try {
-        events = await Event.find({})
-    } catch (e) {
-        console.log(e)
-    }
-
-    return events
-}
 
 async function generateEventTemplate() {
     const events = await findCurrentEvents()
@@ -26,13 +14,13 @@ async function generateEventTemplate() {
             {
                 type: 'postback',
                 title: 'Xem thông tin',
-                payload: `EVENT_${event.id}`,
+                payload: `EVENT_${event._id}`,
             },
         ],
     }))
 }
 
-async function eventMenuTemplate() {
+async function eventListTemplate() {
     return {
         attachment: {
             type: 'template',
@@ -57,4 +45,4 @@ async function eventMenuTemplate() {
     }
 }
 
-module.exports = { eventMenuTemplate }
+module.exports = { eventListTemplate: eventListTemplate }
