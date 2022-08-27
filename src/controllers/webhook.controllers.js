@@ -4,7 +4,6 @@ const handlers = {
     ...require('../handlers/welcome.handlers'),
     ...require('../handlers/event.handlers'),
     ...require('../handlers/meme.handlers'),
-    ...require('../handlers/video.handlers'),
 }
 
 function getWebhook(req, res) {
@@ -97,10 +96,7 @@ function handlePostback(sender_psid, received_postback) {
             handlers.handleMemeRequest(sender_psid)
             break
         }
-        case 'VIDEO': {
-            handlers.handleVideoRequest(sender_psid)
-            break
-        }
+
         default: {
             callSendAPI(sender_psid, {
                 text: 'Rất tiếc, bot không thể xử lý yêu cầu này 😢',

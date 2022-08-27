@@ -34,11 +34,6 @@ function setupProfile() {
                     },
                     {
                         type: 'postback',
-                        title: 'Video tuyển quân',
-                        payload: 'VIDEO',
-                    },
-                    {
-                        type: 'postback',
                         title: 'Menu chính',
                         payload: 'MAIN_MENU',
                     },
