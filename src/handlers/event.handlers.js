@@ -12,6 +12,7 @@ async function showEventList(sender_psid) {
 
     try {
         events = await Event.find({})
+        console.log('Event list: ', JSON.stringify(events))
 
         let eventListTemplate = generateEventListTemplate(events)
         callSendAPI(sender_psid, eventListTemplate)
