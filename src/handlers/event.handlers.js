@@ -45,8 +45,6 @@ async function showEventDetails(sender_psid, event_id) {
     } catch (e) {
         console.log(e)
     }
-
-    return event
 }
 
 module.exports = {
