@@ -1,8 +1,9 @@
 const express = require('express')
 const app = express()
 
-const { configMiddlewares, configViewEngine, setupProfile } = require('./config/')
+const { configMiddlewares, configViewEngine } = require('./config/')
 const { configRoutes } = require('./routes/')
+const { setupProfile } = require('./config/setup')
 
 const port = process.env.PORT || 3000
 

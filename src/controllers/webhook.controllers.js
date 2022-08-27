@@ -3,6 +3,8 @@ const {
     toLowerCaseNonAccentVietnamese,
 } = require('../utils/nonAccentVietnamese')
 
+const { setupTypingOn, setupMarkSeen } = require('../config/setup')
+
 let isRequestingMaterial = false
 let requestingSubject = ''
 
@@ -99,7 +101,7 @@ function handleMessage(sender_psid, received_message) {
     }
 }
 
-const { templates } = require('../templates/templates')
+const { templates } = require('../templates/')
 
 // Handles messaging_postbacks events
 async function handlePostback(sender_psid, received_postback) {
@@ -295,40 +297,6 @@ async function uploadImage(url) {
     }
 
     return result.data.attachment_id
-}
-
-function setupTypingOn(sender_psid) {
-    let request_body = {
-        recipient: {
-            id: sender_psid,
-        },
-        sender_action: 'typing_on',
-    }
-
-    axios({
-        method: 'POST',
-        url: `https://graph.facebook.com/v14.0/${process.env.PAGE_ID}/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`,
-        data: request_body,
-    })
-        .then(() => console.log('Set up typing on', ' - Succeed!'))
-        .catch((error) => console.log('Set up typing on', '- Failed: ' + error))
-}
-
-function setupMarkSeen(sender_psid) {
-    let request_body = {
-        recipient: {
-            id: sender_psid,
-        },
-        sender_action: 'mark_seen',
-    }
-
-    axios({
-        method: 'POST',
-        url: `https://graph.facebook.com/v14.0/${process.env.PAGE_ID}/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`,
-        data: request_body,
-    })
-        .then(() => console.log('Set up mark seen', ' - Succeed!'))
-        .catch((error) => console.log('Set up mark seen', '- Failed: ' + error))
 }
 
 // Sends response messages via the Send API
