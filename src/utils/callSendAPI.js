@@ -25,7 +25,7 @@ function callSendAPI(sender_psid, response) {
         .catch((error) =>
             console.log(
                 'Unable to send message: ' +
-                    JSON.stringify(error?.response.data, null, 4),
+                    JSON.stringify(error.response.data, null, 4),
             ),
         )
 }

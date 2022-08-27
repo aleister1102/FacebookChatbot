@@ -10,7 +10,7 @@ async function saveUser(sender_psid) {
     try {
         await User.create({ psid: sender_psid, memes: 5 })
     } catch (e) {
-        console.log(JSON.stringify(e.response.data, null, 4))
+        console.log(JSON.stringify(e?.response.data, null, 4))
     }
 }
 
