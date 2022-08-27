@@ -3,7 +3,6 @@ const axios = require('axios')
 const APP_DOMAIN = 'https://aleister-botchat.herokuapp.com/'
 const FANPAGE_URL =
     'https://www.facebook.com/Aleisters-botchat-103450915827944/'
-const MATERIAL_URL = 'https://www.wikipedia.org/'
 
 function setupProfile() {
     // Construct the message body
@@ -34,9 +33,9 @@ function setupProfile() {
                         url: FANPAGE_URL,
                     },
                     {
-                        type: 'web_url',
-                        title: 'Tài liệu tổng hợp',
-                        url: MATERIAL_URL,
+                        type: 'postback',
+                        title: 'Video tuyển quân',
+                        payload: 'VIDEO',
                     },
                     {
                         type: 'postback',

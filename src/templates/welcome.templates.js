@@ -1,4 +1,4 @@
-function MainMenuTemplate() {
+function WelcomeMenuTemplate() {
     return {
         attachment: {
             type: 'template',
@@ -19,11 +19,6 @@ function MainMenuTemplate() {
                             },
                             {
                                 type: 'postback',
-                                title: 'Tìm tài liệu',
-                                payload: 'MATERIAL',
-                            },
-                            {
-                                type: 'postback',
                                 title: 'Xem meme',
                                 payload: 'MEME',
                             },
@@ -35,4 +30,4 @@ function MainMenuTemplate() {
     }
 }
 
-module.exports = { MainMenuTemplate }
+module.exports = { MainMenuTemplate: WelcomeMenuTemplate }

@@ -1,6 +1,3 @@
-const eventImage =
-    'https://images.pexels.com/photos/8566472/pexels-photo-8566472.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
-
 function EventListTemplate(eventList) {
     return {
         attachment: {
@@ -11,7 +8,6 @@ function EventListTemplate(eventList) {
                     ...eventList,
                     {
                         title: `Trở về`,
-                        image_url: eventImage,
                         buttons: [
                             {
                                 type: 'postback',

@@ -1,7 +1,8 @@
+const callSendAPI = require('../utils/callSendAPI')
+
 const handlers = {
-    ...require('../handlers/get-started.handlers'),
+    ...require('../handlers/welcome.handlers'),
     ...require('../handlers/event.handlers'),
-    ...require('../handlers/material.handlers'),
     ...require('../handlers/meme.handlers'),
 }
 
@@ -60,7 +61,6 @@ function postWebhook(req, res) {
 // Handles messages events
 function handleMessage(sender_psid, received_message) {
     if (received_message.text) {
-        handlers.handleSubjectResponse(sender_psid, received_message)
     } else if (received_message.attachments) {
         // Get the URL of the message attachment
         // let attachment_url = received_message.attachments[0].payload.url
@@ -87,20 +87,12 @@ async function handlePostback(sender_psid, received_postback) {
             handlers.showEventList(sender_psid)
             break
         }
-        case 'MATERIAL': {
-            handlers.showMaterialMenu(sender_psid)
-            break
-        }
-        case 'MATERIAL_PHYSICS': {
-            handlers.handleMaterialRequest(sender_psid, 'PHYSICS')
-            break
-        }
-        case 'MATERIAL_MATH': {
-            handlers.handleMaterialRequest(sender_psid, 'MATH')
-            break
-        }
         case 'MEME': {
             handlers.handleMemeRequest(sender_psid)
+            break
+        }
+        case 'VIDEO': {
+            handlers.handleVideoRequest(sender_psid)
             break
         }
         default: {
@@ -110,6 +102,10 @@ async function handlePostback(sender_psid, received_postback) {
 
     if (payload.includes('EVENT_')) {
         handlers.showEventDetails(sender_psid, payload.split('_')[1])
+    } else {
+        callSendAPI(sender_psid, {
+            text: 'Rất tiếc, bot không thể xử lý yêu cầu này 😢',
+        })
     }
 }
 
