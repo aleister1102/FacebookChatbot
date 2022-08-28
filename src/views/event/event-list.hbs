@@ -1,5 +1,5 @@
 <div class="container">
-    <h1>Danh sách hoạt động</h1>
+    <h1 class="mb-3">Danh sách hoạt động</h1>
     <table class="table">
         <thead>
             <tr class="text-center">
@@ -10,12 +10,15 @@
 
             </tr>
         </thead>
-        <tbody>
+        <tbody class="drag-area">
             {{#each events}}
-            <tr>
-                <td scope="row">{{this.name}}</td>
-                <td scope="row" class="text-center">{{this.datetime}}</td>
-                <td scope="row" class="text-center">{{this.location}}</td>
+            <tr class="event" id="{{this._id}}">
+                <td scope="row" class="event-name user-select-none">
+                    <i class="list-icon fas fa-bars me-3" role="button"></i>
+                    {{this.name}}
+                </td>
+                <td scope="row" class="event-datetime text-center user-select-none">{{this.datetime}}</td>
+                <td scope="row" class="event-location text-center user-select-none">{{this.location}}</td>
                 <td scope="row" class="text-center">
                     <button type="button" class="btn btn-edit btn-success" data-id="{{this._id}}">Sửa</button>
                     <button type="button" class="btn btn-delete btn-danger" data-id="{{this._id}}">Xóa</button>
@@ -28,6 +31,14 @@
 
 <form method="GET" id="edit-form"></form>
 <form method="POST" id="delete-form"></form>
+<form method="POST" id="sort-form"></form>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"
+    integrity="sha512-Eezs+g9Lq4TCCq0wae01s9PuNWzHYoCMkE97e2qdkYthpI0pzC3UGB03lgEHn2XM85hDOUF6qgqqszs+iXU4UA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+
+<script src="/js/main.js"></script>
 
 <script>
     const $ = document.querySelector.bind(document)
@@ -60,4 +71,40 @@
             deleteForm.submit()
         }
     })
+
+    const dragArea = $('.drag-area')
+    new Sortable(dragArea, {
+        animation: 300,
+        handle: '.list-icon'
+    })
+
+    const eventElements = $$('.event')
+
+    const sortForm = document.forms['sort-form']
+
+    eventElements.forEach(element => {
+        element.ondragend = (e) => {
+            const events = convertEventElementsToEventObjects(eventElements)
+
+            sortForm.action = `/event/arrange?_method=PUT`
+            sortForm.submit()
+        }
+    })
+
+    function convertEventElementsToEventObjects(elementList) {
+        const eventElements = Array.from(elementList)
+        const events = eventElements.map((element) => {
+            const $ = document.querySelector.bind(element)
+
+            const event = {
+                _id: element.id,
+                name: $('.event-name'),
+                datetime: $('.event-datetime'),
+                location: $('.event-location'),
+            }
+
+            return event
+        })
+        return events
+    }
 </script>

@@ -23,6 +23,10 @@ function configMiddlewares(app) {
     app.use(methodOverride('_method'))
 }
 
+function configStaticFiles(app) {
+    app.use(express.static(path.join(__dirname, '..', 'public')))
+}
+
 function configViewEngine(app) {
     app.engine(
         'hbs',
@@ -51,4 +55,9 @@ async function connectToDatabase() {
     }
 }
 
-module.exports = { configMiddlewares, configViewEngine, connectToDatabase }
+module.exports = {
+    configMiddlewares,
+    configStaticFiles,
+    configViewEngine,
+    connectToDatabase,
+}

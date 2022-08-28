@@ -3,6 +3,7 @@ const app = express()
 
 const {
     configMiddlewares,
+    configStaticFiles,
     configViewEngine,
     connectToDatabase,
 } = require('./config/')
@@ -16,6 +17,8 @@ app.listen(port, () => {
 })
 
 configMiddlewares(app)
+
+configStaticFiles(app)
 
 configViewEngine(app)
 

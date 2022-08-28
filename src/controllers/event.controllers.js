@@ -81,6 +81,29 @@ async function deleteEvent(req, res) {
     }
 }
 
+
+
+
+function sortEvents(req, res) {
+    try{
+        console.log()
+    }catch(e){
+        console.log(e)
+    }
+}
+
+
+
+function updateOrder(events) {
+    try {
+        events.forEach(async (event, index) => {
+            await Event.findByIdAndUpdate(event._id, { order: index })
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 module.exports = {
     eventController: {
         getEventPage,
@@ -89,5 +112,6 @@ module.exports = {
         getEditEventPage,
         updateEvent,
         deleteEvent,
+        sortEvents,
     },
 }
