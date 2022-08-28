@@ -30,10 +30,10 @@ function EventDetailsTemplate(event) {
                 template_type: 'generic',
                 elements: [
                     {
-                        title: `${event.name} ${event.semester}`,
-                        subtitle: `Năm học: ${event.year}\nThời gian: ${
-                            event.time || ''
-                        }\nĐịa điểm: ${event.location}`,
+                        title: `${event.name}`,
+                        subtitle: `Thời gian: ${event.time || ''}\nĐịa điểm: ${
+                            event.location
+                        }`,
                     },
                 ],
             },

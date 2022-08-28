@@ -2,20 +2,62 @@
     <h1>Danh sách hoạt động</h1>
     <table class="table">
         <thead>
-            <tr>
+            <tr class="text-center">
                 <th scope="col">Tên hoạt động</th>
                 <th scope="col">Thời gian</th>
                 <th scope="col">Địa điểm</th>
+                <th scope="col">Thao tác</th>
+
             </tr>
         </thead>
         <tbody>
             {{#each events}}
             <tr>
-                <td scope="row">{{this.name}} {{this.semester}}</td>
-                <td scope="row">{{this.datetime}}</td>
-                <td scope="row">{{this.location}}</td>
+                <td scope="row">{{this.name}}</td>
+                <td scope="row" class="text-center">{{this.datetime}}</td>
+                <td scope="row" class="text-center">{{this.location}}</td>
+                <td scope="row" class="text-center">
+                    <button type="button" class="btn btn-edit btn-success" data-id="{{this._id}}">Sửa</button>
+                    <button type="button" class="btn btn-delete btn-danger" data-id="{{this._id}}">Xóa</button>
+                </td>
             </tr>
             {{/each}}
         </tbody>
     </table>
 </div>
+
+<form method="GET" id="edit-form"></form>
+<form method="POST" id="delete-form"></form>
+
+<script>
+    const $ = document.querySelector.bind(document)
+    const $$ = document.querySelectorAll.bind(document)
+
+    const editForm = document.forms['edit-form']
+    const editButtons = $$('.btn-edit')
+
+    editButtons.forEach((button) => {
+        button.onclick = (e) => {
+            e.preventDefault()
+            const element = e.target
+            const eventId = element.dataset.id
+
+            editForm.action = `/event/edit/${eventId}`
+            editForm.submit()
+        }
+    })
+
+    const deleteForm = document.forms['delete-form']
+    const deleteButtons = $$('.btn-delete')
+
+    deleteButtons.forEach((button) => {
+        button.onclick = (e) => {
+            e.preventDefault()
+            const element = e.target
+            const eventId = element.dataset.id
+
+            deleteForm.action = `/event/list/${eventId}?_method=DELETE`
+            deleteForm.submit()
+        }
+    })
+</script>

@@ -5,31 +5,13 @@
             <label for="name-input" class="form-label">Tên hoạt động</label>
             <input type="text" class="form-control" id="name-input" name="name">
         </div>
-        <div class="row">
-            <div class="mb-3 col-6">
-                <label for="year-input" class="form-label">Năm học</label>
-                <select id="year-input" class="form-select" name="year">
-                    <option value={{sum year -1}}-{{year}}>{{sum year -1}}-{{year}}</option>
-                    <option value={{year}}-{{sum year 1}}>{{year}}-{{sum year 1}}</option>
-                </select>
-            </div>
-            <div class="mb-3 col-6">
-                <label for="semester-input" class="form-label">Học kỳ</label>
-                <select id="semester-input" class="form-select" name="semester">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </select>
-            </div>
+        <div class="mb-3">
+            <label for="datetime-input" class="form-label">Thời gian</label>
+            <input type="datetime-local" class="form-control" id="datetime-input" name="datetime">
         </div>
-        <div class="row">
-            <div class="mb-3 col-6">
-                <label for="datetime-input" class="form-label">Thời gian</label>
-                <input type="datetime-local" class="form-control" id="datetime-input" name="datetime">
-            </div>
-            <div class="mb-3 col-6">
-                <label for="location-input" class="form-label">Địa điểm</label>
-                <input type="text" class="form-control" id="location-input" name="location">
-            </div>
+        <div class="mb-3">
+            <label for="location-input" class="form-label">Địa điểm</label>
+            <input type="text" class="form-control" id="location-input" name="location">
         </div>
         <button type="submit" class="btn btn-primary">Thêm</button>
     </form>

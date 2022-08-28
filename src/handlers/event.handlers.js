@@ -20,8 +20,7 @@ async function showEventList(sender_psid) {
 
 function generateEventListTemplate(events) {
     const eventsList = events.map((event) => ({
-        title: `${event.name} ${event.semester}`,
-        subtitle: `Năm học ${event.year}`,
+        title: `${event.name}`,
         image_url: eventImage,
         buttons: [
             {

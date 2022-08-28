@@ -3,6 +3,7 @@ require('dotenv').config()
 const morgan = require('morgan')
 const express = require('express')
 const path = require('path')
+const methodOverride = require('method-override')
 
 const { engine } = require('express-handlebars')
 
@@ -17,6 +18,9 @@ function configMiddlewares(app) {
 
     // parse application/x-www-form-urlencoded
     app.use(express.urlencoded({ extended: false }))
+
+    // override default method
+    app.use(methodOverride('_method'))
 }
 
 function configViewEngine(app) {

@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 const callSendAPI = require('../utils/callSendAPI')
-const hoursDiff = require('../utils/hoursDiff')
+const { hoursDiff } = require('../utils/datetime')
 
 const User = require('../models/User')
 

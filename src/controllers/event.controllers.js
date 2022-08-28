@@ -1,7 +1,10 @@
-const moment = require('moment')
 const Event = require('../models/Event')
 
-const convertDocumentsToObjects = require('../utils/convertDocumentsToObjects')
+const {
+    convertMultipleDocumentsToObjects,
+    convertDocumentToObject,
+} = require('../utils/mongoose')
+const { formatInputDateTime } = require('../utils/datetime')
 
 async function getEvents() {
     try {
@@ -11,26 +14,29 @@ async function getEvents() {
     }
 }
 
+// [GET] /event/list
 async function getEventPage(req, res) {
     const events = await getEvents()
+    const cloneEvents = convertMultipleDocumentsToObjects(events)
+    const formattedEvents = cloneEvents.map((event) => ({
+        ...event,
+        datetime: formatInputDateTime(event.datetime, 'DD-MM-YYYY HH:mm'),
+    }))
 
-    res.render('event/event-list', {
-        events: convertDocumentsToObjects(events),
-    })
+    res.render('event/event-list', { events: formattedEvents })
 }
 
+// [GET] /event/add
 function getAddEventPage(req, res) {
     res.render('event/event-add', { year: new Date().getFullYear() })
 }
 
+// [POST] /event/list
 async function addEvent(req, res) {
     const event = req.body
 
     try {
-        await Event.create({
-            ...event,
-            datetime: formatDateTime(event.datetime, 'HH:mm DD-MM-YYYY'),
-        })
+        await Event.create(event)
 
         res.redirect('/event/list')
     } catch (e) {
@@ -38,8 +44,41 @@ async function addEvent(req, res) {
     }
 }
 
-function formatDateTime(datetime, format) {
-    return moment(datetime, 'YYYY-MM-DDTHH:mm').format(format)
+// [GET] /event/edit/:id
+async function getEditEventPage(req, res) {
+    try {
+        const eventId = req.params.id
+        const event = await Event.findById(eventId)
+        const cloneEvent = convertDocumentToObject(event)
+
+        res.render('event/event-edit', { event: cloneEvent })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+// [PUT] /event/edit/:id
+async function updateEvent(req, res) {
+    const event = req.body
+
+    try {
+        await Event.findByIdAndUpdate(req.params.id, event)
+
+        res.redirect('/event/list')
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+// [DELETE] /event/list/:id
+async function deleteEvent(req, res) {
+    try {
+        await Event.findByIdAndDelete(req.params.id)
+
+        res.redirect('/event/list')
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 module.exports = {
@@ -47,5 +86,8 @@ module.exports = {
         getEventPage,
         getAddEventPage,
         addEvent,
+        getEditEventPage,
+        updateEvent,
+        deleteEvent,
     },
 }

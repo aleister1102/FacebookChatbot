@@ -1,0 +1,18 @@
+<div class="container">
+    <h1>Chỉnh sửa hoạt động</h1>
+    <form method="POST" action="/event/edit/{{event._id}}?_method=PUT">
+        <div class="mb-3">
+            <label for="name-input" class="form-label">Tên hoạt động</label>
+            <input type="text" class="form-control" id="name-input" name="name" value="{{event.name}}">
+        </div>
+        <div class="mb-3">
+            <label for="datetime-input" class="form-label">Thời gian</label>
+            <input type="datetime-local" class="form-control" id="datetime-input" name="datetime" value="{{event.datetime}}">
+        </div>
+        <div class="mb-3">
+            <label for="location-input" class="form-label">Địa điểm</label>
+            <input type="text" class="form-control" id="location-input" name="location" value="{{event.location}}">
+        </div>
+        <button type="submit" class="btn btn-primary">Sửa</button>
+    </form>
+</div>
