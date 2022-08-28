@@ -44,24 +44,36 @@ async function resetMemeCounter(sender_psid) {
     }
 }
 
-async function handleMemeRequest(sender_psid) {
+async function getMeme() {
+    let result
+
     try {
-        let result = await axios({
+        result = await axios({
             method: 'GET',
             url: 'https://meme-api.herokuapp.com/gimme',
         })
+    } catch (e) {
+        console.log(e)
+    }
 
+    return result.data.preview.pop()
+}
+
+async function handleMemeRequest(sender_psid) {
+    try {
+        let meme = await getMeme()
         let user = await User.findOne({ psid: sender_psid })
 
         if (hoursDiff(user.updatedAt, Date.now()) >= 24) {
             await resetMemeCounter(sender_psid)
             await showMemeButtons(sender_psid)
-            sendMeme(sender_psid, result.data.preview.pop())
+            sendMeme(sender_psid, meme)
             return
         }
 
         if (user.meme_counter > 0) {
             await showMemeButtons(sender_psid)
+            sendMeme(sender_psid, meme)
         } else {
             denyMeme(sender_psid)
         }
@@ -71,7 +83,7 @@ async function handleMemeRequest(sender_psid) {
 }
 
 async function sendMeme(sender_psid, meme_url) {
-    console.log('Sending meme...');
+    console.log('Sending meme...')
     let meme = templates.MemeTemplate(meme_url)
 
     await callSendAPI(sender_psid, meme)
@@ -87,7 +99,7 @@ async function showMemeButtons(sender_psid) {
 }
 
 function denyMeme(sender_psid) {
-    console.log('Denying meme...');
+    console.log('Denying meme...')
     callSendAPI(sender_psid, {
         text: 'Rất tiếc, bạn đã hết số lần xem meme trong hôm nay 😔',
     })
