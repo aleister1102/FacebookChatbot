@@ -55,11 +55,13 @@ async function handleMemeRequest(sender_psid) {
 
         if (hoursDiff(user.updatedAt, Date.now()) >= 24) {
             await resetMemeCounter(sender_psid)
+            await showMemeButtons(sender_psid)
+            sendMeme(sender_psid, result.data.preview.pop())
+            return
         }
 
         if (user.meme_counter > 0) {
             await showMemeButtons(sender_psid)
-            sendMeme(sender_psid, result.data.preview.pop())
         } else {
             denyMeme(sender_psid)
         }
