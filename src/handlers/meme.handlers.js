@@ -54,7 +54,7 @@ async function handleMemeRequest(sender_psid) {
         let user = await User.findOne({ psid: sender_psid })
 
         if (hoursDiff(user.updatedAt, Date.now()) >= 24) {
-            resetMemeCounter(sender_psid)
+            await resetMemeCounter(sender_psid)
         }
 
         if (user.meme_counter > 0) {
@@ -63,8 +63,6 @@ async function handleMemeRequest(sender_psid) {
         } else {
             denyMeme(sender_psid)
         }
-
-        console.log('After sending meme...')
     } catch (e) {
         console.log(e)
     }
@@ -76,7 +74,7 @@ async function sendMeme(sender_psid, meme_url) {
     await callSendAPI(sender_psid, meme)
 
     decrementMemeCounter(sender_psid)
-    // updateTimeStamp(sender_psid)
+    updateTimeStamp(sender_psid)
 }
 
 async function showMemeButtons(sender_psid) {
