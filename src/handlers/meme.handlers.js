@@ -73,7 +73,7 @@ async function sendMeme(sender_psid, meme_url) {
 
     let meme = templates.MemeTemplate(meme_url)
 
-    callSendAPI(sender_psid, meme)
+    await callSendAPI(sender_psid, meme)
 
     decrementMemeCounter(sender_psid)
     // updateTimeStamp(sender_psid)
