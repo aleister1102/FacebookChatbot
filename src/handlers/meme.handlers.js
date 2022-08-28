@@ -58,7 +58,7 @@ async function handleMemeRequest(sender_psid) {
         }
 
         if (user.meme_counter > 0) {
-            sendMeme(sender_psid, result.data.preview.pop())
+            await sendMeme(sender_psid, result.data.preview.pop())
             showMemeButtons(sender_psid)
         } else {
             denyMeme(sender_psid)
@@ -73,10 +73,13 @@ async function sendMeme(sender_psid, meme_url) {
 
     let meme = templates.MemeTemplate(meme_url)
 
-    await callSendAPI(sender_psid, meme)
+    return new Promise((resolve, reject) => {
+        callSendAPI(sender_psid, meme)
+        decrementMemeCounter(sender_psid)
+        // updateTimeStamp(sender_psid)
 
-    decrementMemeCounter(sender_psid)
-    // updateTimeStamp(sender_psid)
+        resolve()
+    })
 }
 
 function showMemeButtons(sender_psid) {
