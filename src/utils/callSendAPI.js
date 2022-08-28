@@ -3,6 +3,7 @@ const { setupTypingOn, setupMarkSeen } = require('../config/setup')
 
 // Sends response messages via the Send API
 async function callSendAPI(sender_psid, response) {
+    console.log('Calling send API...')
     // Construct the message body
     let request_body = {
         recipient: {
