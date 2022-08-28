@@ -69,6 +69,7 @@ async function handleMemeRequest(sender_psid) {
 }
 
 async function sendMeme(sender_psid, meme_url) {
+    console.log('Sending meme...');
     let meme = templates.MemeTemplate(meme_url)
 
     await callSendAPI(sender_psid, meme)
@@ -84,6 +85,7 @@ async function showMemeButtons(sender_psid) {
 }
 
 function denyMeme(sender_psid) {
+    console.log('Denying meme...');
     callSendAPI(sender_psid, {
         text: 'Rất tiếc, bạn đã hết số lần xem meme trong hôm nay 😔',
     })
