@@ -63,6 +63,8 @@ async function handleMemeRequest(sender_psid) {
         } else {
             denyMeme(sender_psid)
         }
+
+        console.log('After sending meme...')
     } catch (e) {
         console.log(e)
     }

@@ -29,8 +29,6 @@ async function callSendAPI(sender_psid, response) {
                     JSON.stringify(error.response.data, null, 4),
             ),
         )
-
-    return Promise.resolve()
 }
 
 module.exports = callSendAPI
