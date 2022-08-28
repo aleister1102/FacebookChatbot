@@ -2,7 +2,7 @@ const axios = require('axios')
 const { setupTypingOn, setupMarkSeen } = require('../config/setup')
 
 // Sends response messages via the Send API
-function callSendAPI(sender_psid, response) {
+async function callSendAPI(sender_psid, response) {
     // Construct the message body
     let request_body = {
         recipient: {
@@ -16,7 +16,7 @@ function callSendAPI(sender_psid, response) {
     setupMarkSeen(sender_psid)
 
     // Send the HTTP request to the Messenger Platform
-    axios({
+    await axios({
         method: 'POST',
         url: `https://graph.facebook.com/v14.0/me/messages?access_token=${process.env.PAGE_ACCESS_TOKEN}`,
         data: request_body,

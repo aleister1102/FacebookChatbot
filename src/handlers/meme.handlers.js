@@ -51,43 +51,36 @@ async function handleMemeRequest(sender_psid) {
 
         let user = await User.findOne({ psid: sender_psid })
 
-        return new Promise(async (resolve, reject) => {
-            if (hoursDiff(user.updatedAt, Date.now()) >= 24) {
-                console.log('Reseting meme counter...')
-                resetMemeCounter(sender_psid)
-            }
+        if (hoursDiff(user.updatedAt, Date.now()) >= 24) {
+            console.log('Reseting meme counter...')
+            resetMemeCounter(sender_psid)
+        }
 
-            if (user.meme_counter > 0) {
-                console.log('Sending meme...')
-                await sendMeme(sender_psid, result.data.preview.pop())
-                showMemeButtons(sender_psid)
-            } else {
-                console.log('Sending meme limit message...')
-                denyMeme(sender_psid)
-            }
-
-            resolve()
-        })
+        if (user.meme_counter > 0) {
+            console.log('Sending meme...')
+            sendMeme(sender_psid, result.data.preview.pop())
+            showMemeButtons(sender_psid)
+        } else {
+            console.log('Sending meme limit message...')
+            denyMeme(sender_psid)
+        }
     } catch (e) {
         console.log(e)
     }
 }
 
-async function sendMeme(sender_psid, meme_url) {
+function sendMeme(sender_psid, meme_url) {
     let meme = templates.MemeTemplate(meme_url)
 
-    return new Promise((resolve, reject) => {
-        callSendAPI(sender_psid, meme)
+    callSendAPI(sender_psid, meme)
 
-        decrementMemeCounter(sender_psid)
-        // updateTimeStamp(sender_psid)
-
-        resolve()
-    })
+    decrementMemeCounter(sender_psid)
+    // updateTimeStamp(sender_psid)
 }
 
 function showMemeButtons(sender_psid) {
     let memeButtons = templates.MemeButtonsTemplate()
+
     callSendAPI(sender_psid, memeButtons)
 }
 
