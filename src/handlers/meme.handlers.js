@@ -58,8 +58,8 @@ async function handleMemeRequest(sender_psid) {
         }
 
         if (user.meme_counter > 0) {
-            await sendMeme(sender_psid, result.data.preview.pop())
-            showMemeButtons(sender_psid)
+            await showMemeButtons(sender_psid)
+            sendMeme(sender_psid, result.data.preview.pop())
         } else {
             denyMeme(sender_psid)
         }
@@ -69,8 +69,6 @@ async function handleMemeRequest(sender_psid) {
 }
 
 async function sendMeme(sender_psid, meme_url) {
-    console.log('Sending meme...')
-
     let meme = templates.MemeTemplate(meme_url)
 
     await callSendAPI(sender_psid, meme)
@@ -79,12 +77,10 @@ async function sendMeme(sender_psid, meme_url) {
     // updateTimeStamp(sender_psid)
 }
 
-function showMemeButtons(sender_psid) {
-    console.log('Showing meme buttons...')
-
+async function showMemeButtons(sender_psid) {
     let memeButtons = templates.MemeButtonsTemplate()
 
-    callSendAPI(sender_psid, memeButtons)
+    await callSendAPI(sender_psid, memeButtons)
 }
 
 function denyMeme(sender_psid) {
