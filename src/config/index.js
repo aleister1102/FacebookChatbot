@@ -24,6 +24,11 @@ function configViewEngine(app) {
         'hbs',
         engine({
             extname: 'hbs',
+            helpers: {
+                sum: function (a, b) {
+                    return a + b
+                },
+            },
         }),
     )
     app.set('view engine', 'hbs')

@@ -1,9 +1,21 @@
 <div class="container">
     <h1>Danh sách hoạt động</h1>
-    <ul class="list-group">
-        <li class="list-group-item">Ôn thi giữa kỳ 1</li>
-        <li class="list-group-item">Ôn thi cuối kỳ 1</li>
-        <li class="list-group-item">Ôn thi giữa kỳ 2</li>
-        <li class="list-group-item">Ôn thi cuối kỳ 2</li>
-    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Tên hoạt động</th>
+                <th scope="col">Thời gian</th>
+                <th scope="col">Địa điểm</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each events}}
+            <tr>
+                <td scope="row">{{this.name}} {{this.semester}}</td>
+                <td scope="row">{{this.datetime}}</td>
+                <td scope="row">{{this.location}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
 </div>

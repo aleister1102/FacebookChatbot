@@ -9,11 +9,11 @@ const EventSchema = new Schema(
 
         // public fields
         name: String,
-        semester: String,
         year: String,
+        semester: String,
 
         // details
-        time: Date,
+        datetime: String,
         location: String,
     },
     { _id: false },
