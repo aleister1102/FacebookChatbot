@@ -58,7 +58,7 @@ async function handleMemeRequest(sender_psid) {
         }
 
         if (user.meme_counter > 0) {
-            await sendMeme(sender_psid, result.data.preview.pop())
+            sendMeme(sender_psid, result.data.preview.pop())
             showMemeButtons(sender_psid)
         } else {
             denyMeme(sender_psid)
