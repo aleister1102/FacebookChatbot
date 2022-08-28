@@ -51,12 +51,12 @@ async function handleMemeRequest(sender_psid) {
 
         let user = await User.findOne({ psid: sender_psid })
 
-        return new Promise((resolve, reject) => {
+        return new Promise(async (resolve, reject) => {
             if (hoursDiff(user.updatedAt, Date.now()) >= 24) {
                 console.log('Reseting meme counter...')
                 resetMemeCounter(sender_psid)
             }
-    
+
             if (user.meme_counter > 0) {
                 console.log('Sending meme...')
                 await sendMeme(sender_psid, result.data.preview.pop())
