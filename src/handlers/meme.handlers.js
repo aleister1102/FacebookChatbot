@@ -9,36 +9,23 @@ const templates = { ...require('../templates/meme.templates') }
 
 const MEME_LIMITATION = 5
 
-async function updateTimeStamp(sender_psid) {
+async function handleMemeRequest(sender_psid) {
     try {
-        await User.updateOne(
-            { psid: sender_psid },
-            { $set: { updatedAt: Date.now() } },
-        )
-    } catch (e) {
-        console.log(e)
-    }
-}
+        let meme = await getMeme()
+        let user = await User.findOne({ psid: sender_psid })
 
-async function decrementMemeCounter(sender_psid) {
-    try {
-        await User.updateOne(
-            { psid: sender_psid },
-            { $inc: { meme_counter: -1 } },
-        )
-    } catch (e) {
-        console.log(e)
-    }
-}
+        if (hoursDiff(user.updatedAt, Date.now()) >= 24) {
+            // why it works ?
+            await resetMemeCounter(sender_psid)
+            responseForMemeRequest(sender_psid, meme)
+            return
+        }
 
-async function resetMemeCounter(sender_psid) {
-    console.log('Reseting meme counter...')
-
-    try {
-        await User.updateOne(
-            { psid: sender_psid },
-            { $set: { meme_counter: MEME_LIMITATION } },
-        )
+        if (user.meme_counter > 0) {
+            responseForMemeRequest(sender_psid, meme)
+        } else {
+            denyMeme(sender_psid)
+        }
     } catch (e) {
         console.log(e)
     }
@@ -59,27 +46,22 @@ async function getMeme() {
     return result.data.preview.pop()
 }
 
-async function handleMemeRequest(sender_psid) {
+async function resetMemeCounter(sender_psid) {
+    console.log('Reseting meme counter...')
+
     try {
-        let meme = await getMeme()
-        let user = await User.findOne({ psid: sender_psid })
-
-        if (hoursDiff(user.updatedAt, Date.now()) >= 24) {
-            await resetMemeCounter(sender_psid)
-            await showMemeButtons(sender_psid)
-            sendMeme(sender_psid, meme)
-            return
-        }
-
-        if (user.meme_counter > 0) {
-            await showMemeButtons(sender_psid)
-            sendMeme(sender_psid, meme)
-        } else {
-            denyMeme(sender_psid)
-        }
+        await User.updateOne(
+            { psid: sender_psid },
+            { $set: { meme_counter: MEME_LIMITATION } },
+        )
     } catch (e) {
         console.log(e)
     }
+}
+
+async function responseForMemeRequest(sender_psid, meme) {
+    await showMemeButtons(sender_psid)
+    sendMeme(sender_psid, meme)
 }
 
 async function sendMeme(sender_psid, meme_url) {
@@ -90,6 +72,28 @@ async function sendMeme(sender_psid, meme_url) {
 
     decrementMemeCounter(sender_psid)
     updateTimeStamp(sender_psid)
+}
+
+async function decrementMemeCounter(sender_psid) {
+    try {
+        await User.updateOne(
+            { psid: sender_psid },
+            { $inc: { meme_counter: -1 } },
+        )
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+async function updateTimeStamp(sender_psid) {
+    try {
+        await User.updateOne(
+            { psid: sender_psid },
+            { $set: { updatedAt: Date.now() } },
+        )
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 async function showMemeButtons(sender_psid) {

@@ -10,7 +10,7 @@ use(database);
 // db.users.updateOne({_id: 1}, {$inc: {memes: -1}})
 
 // Reset counter after one day
-// db.users.updateOne({psid: '5467818709972867'}, {$set: {updatedAt: 1641131963050}})
+db.users.updateOne({psid: '5467818709972867'}, {$set: {updatedAt: 1641131963050}})
 
 // Delete users
 // db.users.deleteMany({})
