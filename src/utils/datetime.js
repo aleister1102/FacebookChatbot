@@ -6,9 +6,8 @@ function formatInputDateTime(datetime, format) {
 
 function hoursDiff(date1, date2) {
     let diff = date2 - date1
+    console.log(diff)
     return Math.floor(diff / 1000 / 60 / 60)
 }
-
-console.log(hoursDiff('1661616139379', Date.now()))
 
 module.exports = { formatInputDateTime, hoursDiff }
