@@ -19,17 +19,19 @@ async function showEventList(sender_psid) {
 }
 
 function generateEventListTemplate(events) {
-    const eventsList = events.map((event) => ({
-        title: `${event.name}`,
-        image_url: eventImage,
-        buttons: [
-            {
-                type: 'postback',
-                title: 'Xem thông tin',
-                payload: `EVENT_${event._id}`,
-            },
-        ],
-    }))
+    const eventsList = events
+        .sort((a, b) => a.order - b.order)
+        .map((event) => ({
+            title: `${event.name}`,
+            image_url: eventImage,
+            buttons: [
+                {
+                    type: 'postback',
+                    title: 'Xem thông tin',
+                    payload: `EVENT_${event._id}`,
+                },
+            ],
+        }))
 
     return templates.EventListTemplate(eventsList)
 }
