@@ -40,10 +40,13 @@ function generateEventListTemplate(events) {
 async function showEventDetails(sender_psid, event_id) {
     try {
         const event = await Event.findById(event_id)
-
-        const eventDetails = templates.EventDetailsTemplate({
+        const formattedEvent = {
             ...event,
             datetime: formatInputDateTime(event.datetime, 'DD-MM-YYYY HH:mm'),
+        }
+
+        const eventDetails = templates.EventDetailsTemplate({
+            event: formattedEvent,
         })
         callSendAPI(sender_psid, eventDetails)
     } catch (e) {
