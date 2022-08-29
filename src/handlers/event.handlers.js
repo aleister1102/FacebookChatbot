@@ -1,5 +1,5 @@
 const callSendAPI = require('../utils/callSendAPI')
-const { formatInputDateTime } = require('../utils/dateTime')
+const { formatInputDateTime } = require('../utils/datetime')
 
 const Event = require('../models/Event')
 
