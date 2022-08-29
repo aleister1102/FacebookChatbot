@@ -45,6 +45,8 @@ async function showEventDetails(sender_psid, event_id) {
             datetime: formatInputDateTime(event.datetime, 'DD-MM-YYYY HH:mm'),
         }
 
+        console.log(formattedEvent)
+
         const eventDetails = templates.EventDetailsTemplate({
             event: formattedEvent,
         })
