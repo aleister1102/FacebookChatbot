@@ -33,7 +33,7 @@ function EventDetailsTemplate(event) {
                 elements: [
                     {
                         title: `${event.name}`,
-                        subtitle: `Thời gian: ${event.time || ''}\nĐịa điểm: ${
+                        subtitle: `Thời gian: ${event.datetime || ''}\nĐịa điểm: ${
                             event.location
                         }`,
                     },
