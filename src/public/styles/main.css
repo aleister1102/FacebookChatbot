@@ -1,4 +1,8 @@
-td{
+td {
     vertical-align: middle;
     font-size: 1.2rem;
+}
+
+.btn-save:focus {
+    box-shadow: none;
 }

@@ -6,7 +6,7 @@
                 <th scope="col">Tên hoạt động</th>
                 <th scope="col">Thời gian</th>
                 <th scope="col">Địa điểm</th>
-                <th scope="col">Thao tác</th>
+                <th scope="col" class="text-end"></th>
 
             </tr>
         </thead>
@@ -19,7 +19,7 @@
                 </td>
                 <td scope="row" class="event-datetime text-center user-select-none">{{this.datetime}}</td>
                 <td scope="row" class="event-location text-center user-select-none">{{this.location}}</td>
-                <td scope="row" class="text-center">
+                <td scope="row" class="text-end">
                     <button type="button" class="btn btn-edit btn-success" data-id="{{this._id}}">Sửa</button>
                     <button type="button" class="btn btn-delete btn-danger" data-id="{{this._id}}">Xóa</button>
                 </td>
@@ -27,11 +27,14 @@
             {{/each}}
         </tbody>
     </table>
+    <div class="text-end pe-2">
+        <button type="button" class="btn btn-save btn-primary" disabled>Lưu</button>
+    </div>
 </div>
 
 <form method="GET" id="edit-form"></form>
 <form method="POST" id="delete-form"></form>
-<form method="POST" id="sort-form"></form>
+<form method="POST" id="arrange-form"></form>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"
     integrity="sha512-Eezs+g9Lq4TCCq0wae01s9PuNWzHYoCMkE97e2qdkYthpI0pzC3UGB03lgEHn2XM85hDOUF6qgqqszs+iXU4UA=="
@@ -79,32 +82,33 @@
     })
 
     const eventElements = $$('.event')
-
-    const sortForm = document.forms['sort-form']
+    const saveButton = $('.btn-save')
+    const arrangeForm = document.forms['arrange-form']
 
     eventElements.forEach(element => {
         element.ondragend = (e) => {
-            const events = convertEventElementsToEventObjects(eventElements)
-
-            sortForm.action = `/event/arrange?_method=PUT`
-            sortForm.submit()
+            saveButton.removeAttribute('disabled')
         }
     })
 
-    function convertEventElementsToEventObjects(elementList) {
-        const eventElements = Array.from(elementList)
-        const events = eventElements.map((element) => {
-            const $ = document.querySelector.bind(element)
+    saveButton.onclick = (e) => {
+        e.target.setAttribute('disabled', '')
 
-            const event = {
-                _id: element.id,
-                name: $('.event-name'),
-                datetime: $('.event-datetime'),
-                location: $('.event-location'),
-            }
+        addEventsToArrangeForm()
 
-            return event
-        })
-        return events
+        arrangeForm.action = '/event/arrange?_method=PATCH'
+        arrangeForm.submit()
+    }
+
+    function addEventsToArrangeForm() {
+        const eventElements = $$('.event')
+        
+        Array.from(eventElements)
+            .map((element, index) => {
+                return `<input type="hidden" name="${element.id}" value="${index}">`
+            })
+            .forEach((element) => {
+                arrangeForm.innerHTML += element
+            })
     }
 </script>

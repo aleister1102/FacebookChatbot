@@ -18,10 +18,12 @@ async function getEvents() {
 async function getEventPage(req, res) {
     const events = await getEvents()
     const cloneEvents = convertMultipleDocumentsToObjects(events)
-    const formattedEvents = cloneEvents.map((event) => ({
-        ...event,
-        datetime: formatInputDateTime(event.datetime, 'DD-MM-YYYY HH:mm'),
-    }))
+    const formattedEvents = cloneEvents
+        .map((event) => ({
+            ...event,
+            datetime: formatInputDateTime(event.datetime, 'DD-MM-YYYY HH:mm'),
+        }))
+        .sort((a, b) => a.order - b.order)
 
     res.render('event/event-list', { events: formattedEvents })
 }
@@ -36,7 +38,7 @@ async function addEvent(req, res) {
     const event = req.body
 
     try {
-        await Event.create(event)
+        await Event.create({ ...event, order: -1 })
 
         res.redirect('/event/list')
     } catch (e) {
@@ -81,24 +83,18 @@ async function deleteEvent(req, res) {
     }
 }
 
+// [PATCH] /event/arrange
+async function arrangeEvents(req, res) {
+    const eventOrder = req.body
 
-
-
-function sortEvents(req, res) {
-    try{
-        console.log()
-    }catch(e){
-        console.log(e)
-    }
-}
-
-
-
-function updateOrder(events) {
     try {
-        events.forEach(async (event, index) => {
-            await Event.findByIdAndUpdate(event._id, { order: index })
-        })
+        for (const eventId in eventOrder) {
+            await Event.findByIdAndUpdate(eventId, {
+                order: eventOrder[eventId],
+            })
+        }
+
+        res.redirect('/event/list')
     } catch (e) {
         console.log(e)
     }
@@ -112,6 +108,6 @@ module.exports = {
         getEditEventPage,
         updateEvent,
         deleteEvent,
-        sortEvents,
+        arrangeEvents,
     },
 }

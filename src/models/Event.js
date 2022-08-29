@@ -6,6 +6,7 @@ const EventSchema = new Schema(
     {
         // private fields
         _id: Number,
+        order: Number,
 
         // public fields
         name: String,
