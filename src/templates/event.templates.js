@@ -13,7 +13,7 @@ function EventListTemplate(eventList) {
                         buttons: [
                             {
                                 type: 'postback',
-                                title: 'Quay về menu chính',
+                                title: 'Menu chính',
                                 payload: `MAIN_MENU`,
                             },
                         ],
