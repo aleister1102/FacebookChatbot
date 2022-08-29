@@ -42,11 +42,7 @@ async function showEventDetails(sender_psid, event_id) {
         const event = await Event.findById(event_id)
         event.datetime = formatInputDateTime(event.datetime, 'DD-MM-YYYY HH:mm')
 
-        console.log(event)
-
-        const eventDetails = templates.EventDetailsTemplate({
-            event: formattedEvent,
-        })
+        const eventDetails = templates.EventDetailsTemplate(event)
         callSendAPI(sender_psid, eventDetails)
     } catch (e) {
         console.log(e)
