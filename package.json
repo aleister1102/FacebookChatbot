@@ -1,29 +1,33 @@
 {
-  "name": "chatbot",
-  "version": "1.0.0",
-  "description": "a chatbot for fanpage",
-  "main": "index.js",
-  "author": "kwan",
-  "license": "ISC",
-  "scripts": {
-    "start": "nodemon src/index.js"
-  },
-  "devDependencies": {
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.19"
-  },
-  "dependencies": {
-    "axios": "^0.27.2",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
-    "express-handlebars": "^6.0.6",
-    "method-override": "^3.0.0",
-    "moment": "^2.29.4",
-    "mongoose": "^6.5.3",
-    "mongoose-sequence": "^5.3.1",
-    "path": "^0.12.7"
-  },
-  "nodemonConfig": {
-    "ext": "js json hbs css"
-  }
+    "name": "chatbot",
+    "version": "1.0.0",
+    "description": "a chatbot for fanpage",
+    "main": "src/index.js",
+    "author": "kwan",
+    "license": "ISC",
+    "scripts": {
+        "start": "node src/index.js"
+    },
+    "devDependencies": {
+        "morgan": "^1.10.0",
+        "nodemon": "^2.0.19"
+    },
+    "dependencies": {
+        "axios": "^0.27.2",
+        "dotenv": "^16.0.1",
+        "express": "^4.18.1",
+        "express-handlebars": "^6.0.6",
+        "method-override": "^3.0.0",
+        "moment": "^2.29.4",
+        "mongoose": "^6.5.3",
+        "mongoose-sequence": "^5.3.1",
+        "path": "^0.12.7",
+        "vercel": "^28.15.3"
+    },
+    "nodemonConfig": {
+        "ext": "js json hbs css"
+    },
+    "engines": {
+        "node": "18.x"
+    }
 }
