@@ -1,8 +1,7 @@
-const axios = require('axios')
+const axios = require('axios');
+require('dotenv').config()
 
-const APP_DOMAIN = 'https://aleister-botchat.herokuapp.com/'
-const FANPAGE_URL =
-    'https://www.facebook.com/Aleisters-botchat-103450915827944/'
+const {APP_DOMAIN, FANPAGE_URL, PAGE_ACCESS_TOKEN, PAGE_ID} = process.env
 
 function setupProfile() {
     // Construct the message body
@@ -88,4 +87,4 @@ function setupMarkSeen(sender_psid) {
         .catch((error) => console.log('Set up mark seen', '- Failed: ' + error))
 }
 
-module.exports = { setupProfile, setupTypingOn, setupMarkSeen }
+export default { setupProfile, setupTypingOn, setupMarkSeen }
