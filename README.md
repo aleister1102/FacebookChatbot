@@ -1,9 +1,7 @@
 # FacebookChatbot
 
-A chatbot that automatically responds to messages, retrieves information for the NES club. The chatbot also integrates several APIs to send memes, quotes, and search for 
+A chatbot that automatically responds to messages, and retrieves information for the NES club. The chatbot also integrates several APIs to send memes, and quotes, and search for 
 documents, as well as an admin dashboard to efficiently manage club activities.
-
-
 
 ## Features
 
@@ -11,6 +9,10 @@ documents, as well as an admin dashboard to efficiently manage club activities.
 - Information retrieval: It can retrieve information for the NES club based on user queries.
 - Integration of external APIs: The chatbot integrates APIs to send memes, quotes, and search for documents.
 - Admin dashboard: There is an admin dashboard for efficient management of club activities.
+
+## Demo
+
+![image](https://github.com/aleister1102/FacebookChatbot/assets/78531303/db183468-7b05-4d41-a9d2-3787385dab1f)
 
 ## Tech Stack
 
